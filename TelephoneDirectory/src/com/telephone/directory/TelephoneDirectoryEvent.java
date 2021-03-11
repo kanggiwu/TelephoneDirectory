@@ -3,16 +3,14 @@ package com.telephone.directory;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
-import java.sql.SQLException;
 
 import javax.swing.JOptionPane;
 
-
-import javax.swing.event.TableModelEvent;
-
-public class TelephoneDirectoryEvent implements ActionListener {
+public class TelephoneDirectoryEvent implements ActionListener,MouseListener{
 	//연결
 	   static DBConnectionMgr    dbMgr     = null;
 	   Connection             	   con       = null;
@@ -29,9 +27,10 @@ public class TelephoneDirectoryEvent implements ActionListener {
 	public TelephoneDirectoryEvent(TelephoneDirectoryDialog tdDialog) {
 		this.tdDialog = tdDialog;
 	}
-	public TelephoneDirectoryEvent(TelephoneDirectoryView t_view, TelephoenDirectoryDAO db_process) {
+	public TelephoneDirectoryEvent(TelephoneDirectoryView t_view, TelephoenDirectoryDAO db_process,TelephoneDirectoryDialog tdDialog) {
 		this.t_view = t_view;
 		this.db_process = db_process;
+		this.tdDialog = tdDialog;
 	}
 	public void setEnabledVisibled(boolean isFlag) {
 		//값들을 고칠 수 있는지 없는지에 대한 유무
@@ -149,12 +148,41 @@ public class TelephoneDirectoryEvent implements ActionListener {
 			int combo_index = t_view.jcombo_search.getSelectedIndex();
 			db_process.setComboIndex(combo_index);
 		}else if(obj == t_view.jmi_insert) {//부모창에서 추가버튼을 누른 경우
+			tdDialog.setTitle("추가");
+			tdDialog.setVisible(true);
 			
-		}else if(obj == t_view.jmi_insert) {//부모창에서 삭제버튼을 누른 경우
 			
+			
+		}else if(obj == t_view.jmi_delete) {//부모창에서 삭제버튼을 누른 경우
+			tdDialog.setTitle("삭제");
+			tdDialog.setVisible(true);
 		}
 		//////////////////////자식창 이벤트////////////////////////////////////////
 		
 	}
+	@Override
+	public void mouseClicked(MouseEvent e) {
+	}
+	@Override
+	public void mouseEntered(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+	@Override
+	public void mouseExited(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+	@Override
+	public void mousePressed(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+	@Override
+	public void mouseReleased(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+	
 
 }

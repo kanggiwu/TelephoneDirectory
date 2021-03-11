@@ -37,6 +37,11 @@ public class TelephoneDirectoryDialog extends JDialog {
 	JButton    jbtn_close    = new JButton("취소");
 	
 	TelephoneDirectoryEvent tdEvent = null;
+	
+	
+	public TelephoneDirectoryDialog() {
+		initDisplay();
+	}
 	public void initDisplay() {
 		  
 		  jp_center.setLayout(null);
@@ -92,11 +97,11 @@ public class TelephoneDirectoryDialog extends JDialog {
 	      this.add("South",jp_south);
 	      this.setTitle("");
 	      this.setSize(400, 600);
-	      this.setVisible(true);
+	      this.setVisible(false);
 	      
 	   }
 	public static void main(String[] args) {
-		new TelephoneDirectoryDialog().initDisplay();
+		//new TelephoneDirectoryDialog().initDisplay();
 	}
 
 }
