@@ -7,15 +7,10 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
-<<<<<<< HEAD
-import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-import javax.swing.JTextField;
 
 
-=======
 import javax.swing.event.TableModelEvent;
->>>>>>> refs/remotes/origin/main
 
 public class TelephoneDirectoryEvent implements ActionListener {
 	//연결
@@ -27,11 +22,16 @@ public class TelephoneDirectoryEvent implements ActionListener {
 	StringBuilder sql_upd = null;
 	
 	//TelephoneDirectoryView view = new TelephoneDirectoryView();
-<<<<<<< HEAD
 	TelephoneDirectoryDialog tdDialog = null;
+	TelephoneDirectoryView t_view = null;
+	TelephoenDirectoryDAO db_process = null;
 	
 	public TelephoneDirectoryEvent(TelephoneDirectoryDialog tdDialog) {
 		this.tdDialog = tdDialog;
+	}
+	public TelephoneDirectoryEvent(TelephoneDirectoryView t_view, TelephoenDirectoryDAO db_process) {
+		this.t_view = t_view;
+		this.db_process = db_process;
 	}
 	public void setEnabledVisibled(boolean isFlag) {
 		//값들을 고칠 수 있는지 없는지에 대한 유무
@@ -65,24 +65,11 @@ public class TelephoneDirectoryEvent implements ActionListener {
 	//삭제할 경우
 	public void deleteDB() {
 		
-=======
-	TelephoneDirectoryDialog dialog = null;//*********이부분 객체 생성XX수정사항
-	private TelephoneDirectoryView t_view = null;
-	TelephoenDirectoryDAO db_process = null;
-	public TelephoneDirectoryEvent(TelephoneDirectoryDialog dialog) {
-		this.dialog = dialog;
->>>>>>> refs/remotes/origin/main
-	}
-	
-	public TelephoneDirectoryEvent(TelephoneDirectoryView t_view, TelephoenDirectoryDAO db_process) {
-		this.t_view = t_view;
-		this.db_process = db_process;
 	}
 
 	@Override
-<<<<<<< HEAD
 	public void actionPerformed(ActionEvent ae) {
-		Object obj = ae.getSource();
+		/*Object obj = ae.getSource();
 		//수정버튼 클릭시//////////////////////
 		if(tdDialog.jmi_upd==obj) {
 			setEnabledVisibled(true);//값들을 수정 가능 ,수정버튼, 취소버튼 생성
@@ -145,11 +132,10 @@ public class TelephoneDirectoryEvent implements ActionListener {
 			}
 		}
 		///////////////////////////////////
-=======
-	public void actionPerformed(ActionEvent e) {
-		Object obj = e.getSource();
-		String command = e.getActionCommand();
+		String command = ae.getActionCommand();*/
 		///////////////////////부모창 이벤트///////////////////////////////////
+		Object obj = ae.getSource();
+		String command = ae.getActionCommand();
 		if(command.equals("검색")) {//부모창에서 검색을 눌렀을 경우
 			System.out.println("검색");
 				t_view.jbtn_search.setText("취소");
@@ -169,7 +155,6 @@ public class TelephoneDirectoryEvent implements ActionListener {
 		}
 		//////////////////////자식창 이벤트////////////////////////////////////////
 		
->>>>>>> refs/remotes/origin/main
 	}
 
 }

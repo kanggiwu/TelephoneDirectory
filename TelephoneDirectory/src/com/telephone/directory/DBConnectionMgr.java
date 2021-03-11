@@ -12,7 +12,7 @@ import java.sql.SQLException;
 public class DBConnectionMgr {
 	private final static String	_DRIVER = "oracle.jdbc.driver.OracleDriver";
 	private final static String	_URL = "jdbc:oracle:thin:@192.168.0.26:1521:orcl11";
-	private final static String	_USER = "jiwu";
+	private final static String	_USER = "semiP";
 	private final static String	_PW = "tiger";
 	Connection 			con 	= 	null;
 	public static DBConnectionMgr getInstance() {//null일떄만 인스턴스화!

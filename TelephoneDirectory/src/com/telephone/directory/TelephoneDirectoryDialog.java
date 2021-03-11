@@ -33,16 +33,10 @@ public class TelephoneDirectoryDialog extends JDialog {
 	JLabel       jlb_mainDish  = new JLabel("주음식");
 	JTextField   jtf_mainDish  = new JTextField();
 	JPanel       jp_south    = new JPanel();
-<<<<<<< HEAD
-	JButton    jbtn_account = new JButton("처리");
-	JButton    jbtn_close    = new JButton("닫기");
-
-=======
 	JButton    jbtn_account = new JButton("수정완료");
 	JButton    jbtn_close    = new JButton("취소");
 	
 	TelephoneDirectoryEvent tdEvent = null;
->>>>>>> branch 'main' of https://github.com/kanggiwu/TelephoneDirectory.git
 	public void initDisplay() {
 		  
 		  jp_center.setLayout(null);
