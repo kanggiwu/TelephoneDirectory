@@ -34,8 +34,10 @@ public class TelephoneDirectoryDialog extends JDialog {
 	JTextField   jtf_mainDish  = new JTextField();
 	   
 	JPanel       jp_south    = new JPanel();
-	JButton    jbtn_account = new JButton("처리");
-	JButton    jbtn_close    = new JButton("닫기");
+	JButton    jbtn_account = new JButton("수정완료");
+	JButton    jbtn_close    = new JButton("취소");
+	
+	TelephoneDirectoryEvent tdEvent = null;
 	public void initDisplay() {
 		  
 		  jp_center.setLayout(null);
@@ -70,6 +72,21 @@ public class TelephoneDirectoryDialog extends JDialog {
 	      jp_south.add(jbtn_account);
 	      jp_south.add(jbtn_close);
 	      
+	      //수정과 삭제 이벤트 버튼들
+	      tdEvent = new TelephoneDirectoryEvent(this);
+	      jmi_upd.addActionListener(tdEvent);//수정버튼 클릭시
+	      jmi_del.addActionListener(tdEvent);//삭제버튼 클릭시
+	      
+	      //수정을 위한 버튼들 안보이게 숨김
+	      tdEvent.setEnabledVisibled(false);
+
+	      //수정 클릭 후 생성되는 버튼들
+	      jbtn_account.addActionListener(tdEvent);//수정안에서의 수정 버튼 클릭시
+	      jbtn_close.addActionListener(tdEvent);//수정안에서의 취소 버튼 클릭시
+	      
+	      TelVO telvo = new TelVO("고기고기", "01032344", "지니","고기", "사가정", "삼겹살");//*************예시
+	      tdEvent.setValue(telvo);//예************ㄴ시
+	      
 		  jbm.add(jm_file);
 		  this.setJMenuBar(jbm);
 	      this.add("Center", jp_center);
@@ -77,10 +94,10 @@ public class TelephoneDirectoryDialog extends JDialog {
 	      this.setTitle("");
 	      this.setSize(400, 600);
 	      this.setVisible(true);
+	      
 	   }
 	public static void main(String[] args) {
 		new TelephoneDirectoryDialog().initDisplay();
-
 	}
 
 }
