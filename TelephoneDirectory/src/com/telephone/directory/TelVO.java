@@ -2,6 +2,7 @@ package com.telephone.directory;
 
 
 public class TelVO {
+	int		seq	=	0;
 	String store_name = null;
 	String t_name = null;
 	String address = null;
@@ -54,6 +55,12 @@ public class TelVO {
 	}
 	public void setMain_dish(String main_dish) {
 		this.main_dish = main_dish;
+	}
+	public int getSeq() {
+		return seq;
+	}
+	public void setSeq(int seq) {
+		this.seq = seq;
 	}
 	
 	

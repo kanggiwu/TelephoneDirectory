@@ -89,6 +89,7 @@ public class TelephoenDirectoryDAO {
 	            while(rs.next()) {
 	            	System.out.println("해당값 존재");
 	            	tVO = new TelVO();//TelVO객체를 생성해준다.
+	            	tVO.setSeq(rs.getInt("seq"));
 					tVO.setStore_name(rs.getString("store_name"));
 					tVO.setAddress(rs.getString("address"));
 					tVO.setTel_num(rs.getString("tel_num"));
@@ -103,7 +104,7 @@ public class TelephoenDirectoryDAO {
 	            
 	            tVOS = new TelVO[tels.size()];//객체의 수만큼 객체배열 생성
 				tels.copyInto(tVOS);//객체배열에 객체 넣기
-				t_view.dtm_phoneNum= (DefaultTableModel)t_view.jsb_phoneNum.getModel();
+				t_view.dtm_phoneNum= (DefaultTableModel)t_view.jtb_phoneNum.getModel();
 
 				t_view.dtm_phoneNum.setNumRows(0);
 

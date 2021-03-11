@@ -27,11 +27,11 @@ public class TelephoneDirectoryView {
 	JButton					jbtn_search		=	new JButton("검색");
 	String 					data[][]		=	new String[0][3];
 	DefaultTableModel		dtm_phoneNum	=	new	DefaultTableModel(data,cols);
-	JTable					jsb_phoneNum	=	new	JTable(dtm_phoneNum);
-	JScrollPane				jsp_phoneNum	=	new	JScrollPane(jsb_phoneNum);
+	JTable					jtb_phoneNum	=	new	JTable(dtm_phoneNum);
+	JScrollPane				jsp_phoneNum	=	new	JScrollPane(jtb_phoneNum);
 	TelephoenDirectoryDAO				db_process		=	new TelephoenDirectoryDAO(this);
-	TelephoneDirectoryEvent t_event 		=	new TelephoneDirectoryEvent(this,db_process);
 	TelephoneDirectoryDialog	t_dialog	=	new TelephoneDirectoryDialog();
+	TelephoneDirectoryEvent 	t_event 		=	new TelephoneDirectoryEvent(this,db_process,t_dialog);
 	
 	public TelephoneDirectoryView() {
 		
@@ -60,16 +60,10 @@ public class TelephoneDirectoryView {
 		
 	}
 	private void setEnable(boolean b) {
-		jsb_phoneNum.setEnabled(false);
+		jtb_phoneNum.setEnabled(false);
 		
 	}
 	
-
-
-	
-			
-	
-
 
 
 	public static void main(String[] args) {
