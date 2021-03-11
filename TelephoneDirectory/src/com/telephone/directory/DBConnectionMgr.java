@@ -11,8 +11,8 @@ import java.sql.SQLException;
 //반복되는 코드를 줄이기 위해 해당 패키지에서 반복되는 코드들을 넣어준다.
 public class DBConnectionMgr {
 	private final static String	_DRIVER = "oracle.jdbc.driver.OracleDriver";
-	private final static String	_URL = "jdbc:oracle:thin:@192.168.0.15:1521:orcl11";
-	private final static String	_USER = "scott";
+	private final static String	_URL = "jdbc:oracle:thin:@192.168.0.26:1521:orcl11";
+	private final static String	_USER = "jiwu";
 	private final static String	_PW = "tiger";
 	Connection 			con 	= 	null;
 	public static DBConnectionMgr getInstance() {//null일떄만 인스턴스화!
