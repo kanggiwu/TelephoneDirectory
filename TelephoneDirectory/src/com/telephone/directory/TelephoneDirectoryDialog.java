@@ -32,10 +32,10 @@ public class TelephoneDirectoryDialog extends JDialog {
 	JTextField   jtf_address  = new JTextField();
 	JLabel       jlb_mainDish  = new JLabel("주음식");
 	JTextField   jtf_mainDish  = new JTextField();
-	   
 	JPanel       jp_south    = new JPanel();
 	JButton    jbtn_account = new JButton("처리");
 	JButton    jbtn_close    = new JButton("닫기");
+
 	public void initDisplay() {
 		  
 		  jp_center.setLayout(null);
