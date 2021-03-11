@@ -24,25 +24,38 @@ public class TelephoneDirectoryEvent implements ActionListener,MouseListener{
 	TelephoneDirectoryView t_view = null;
 	TelephoenDirectoryDAO db_process = null;
 	
+	
 	public TelephoneDirectoryEvent(TelephoneDirectoryDialog tdDialog) {
 		this.tdDialog = tdDialog;
 	}
+	
 	public TelephoneDirectoryEvent(TelephoneDirectoryView t_view, TelephoenDirectoryDAO db_process,TelephoneDirectoryDialog tdDialog) {
 		this.t_view = t_view;
 		this.db_process = db_process;
 		this.tdDialog = tdDialog;
 	}
-	public void setEnabledVisibled(boolean isFlag) {
+	
+	public void setTde(String titleName, boolean isFlag1,boolean isFlag2, TelVO telVO) {
+		tdDialog.setVisible(true); //창 보이게
+		tdDialog.setTitle(titleName); //창 타이틀
+		setEnabledVisibled(isFlag1,isFlag2);//창안에서 값을 고칠 수 있는 지 여부+ 상단 바 여부
+		setValue(telVO); //데이터 값 넣기
+		
+	}
+	
+	public void setEnabledVisibled(boolean isFlag1,boolean isFlag2) {
 		//값들을 고칠 수 있는지 없는지에 대한 유무
-		tdDialog.jtf_storeName.setEditable(isFlag);
-		tdDialog.jtf_phoneNum.setEditable(isFlag);
-		tdDialog.jtf_tName.setEditable(isFlag);
-		tdDialog.jtf_foodStyle.setEditable(isFlag);
-		tdDialog.jtf_address.setEditable(isFlag);
-		tdDialog.jtf_mainDish.setEditable(isFlag);
+		tdDialog.jtf_storeName.setEditable(isFlag1);
+		tdDialog.jtf_phoneNum.setEditable(isFlag1);
+		tdDialog.jtf_tName.setEditable(isFlag1);
+		tdDialog.jtf_foodStyle.setEditable(isFlag1);
+		tdDialog.jtf_address.setEditable(isFlag1);
+		tdDialog.jtf_mainDish.setEditable(isFlag1);
 		//수정버튼, 취소버튼 유무
-	    tdDialog.jbtn_account.setVisible(isFlag);
-	    tdDialog.jbtn_close.setVisible(isFlag);
+	    tdDialog.jbtn_account.setVisible(isFlag1);
+	    tdDialog.jbtn_close.setVisible(isFlag1);
+	    //상단바 유무
+	    tdDialog.jm_file.setVisible(isFlag2);
     }
 	
 	
@@ -61,16 +74,14 @@ public class TelephoneDirectoryEvent implements ActionListener,MouseListener{
 		    tdDialog.jtf_mainDish.setText(telVO.getMain_dish ());
 		}
 	}
-	//삭제할 경우
-	public void deleteDB() {
-		
-	}
+
 
 	@Override
 	public void actionPerformed(ActionEvent ae) {
 		/*Object obj = ae.getSource();
 		//수정버튼 클릭시//////////////////////
 		if(tdDialog.jmi_upd==obj) {
+			setTde("수정", true, true, TelVO telVO);
 			setEnabledVisibled(true);//값들을 수정 가능 ,수정버튼, 취소버튼 생성
 		}
 		///////////////////////////////////
@@ -148,8 +159,8 @@ public class TelephoneDirectoryEvent implements ActionListener,MouseListener{
 			int combo_index = t_view.jcombo_search.getSelectedIndex();
 			db_process.setComboIndex(combo_index);
 		}else if(obj == t_view.jmi_insert) {//부모창에서 추가버튼을 누른 경우
-			tdDialog.setTitle("추가");
-			tdDialog.setVisible(true);
+			setTde("추가",true,false,null);
+			
 			
 			
 			
