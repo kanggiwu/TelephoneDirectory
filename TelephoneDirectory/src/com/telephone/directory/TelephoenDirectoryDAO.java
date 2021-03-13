@@ -129,6 +129,13 @@ public class TelephoenDirectoryDAO {
 		}
 	}
 	
+	public void db_detail()	{
+		int index[]	= t_view.jtb_phoneNum.getSelectedRows();
+		
+		
+	}
+	
+	
 	public String getQuery(int combo_index) {
 		String sql = null;
 		

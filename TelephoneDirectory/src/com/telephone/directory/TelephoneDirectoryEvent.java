@@ -41,12 +41,32 @@ public class TelephoneDirectoryEvent implements ActionListener{
 			int combo_index = t_view.jcombo_search.getSelectedIndex();
 			db_process.setComboIndex(combo_index);
 		}else if(obj == t_view.jmi_insert) {//부모창에서 추가버튼을 누른 경우
-			//setTde("추가",true,false,null);
-			
+			tdDialog.setTitle("추가");
+			tdDialog.setVisible(true);
 		}else if(obj == t_view.jmi_delete) {//부모창에서 삭제버튼을 누른 경우
 			//tdDialog.setTitle("삭제");
 			//tdDialog.setVisible(true);
 		}
+	}
+	@Override
+	public void mouseClicked(MouseEvent me) {
+		 if (me.getButton() == 1) { ///////////확인용 
+			 System.out.println("마우스 1번클릭");
+		 }
+		 if (me.getClickCount() == 2) {
+			 System.out.println("마우스 더블클릭");
+			 tdDialog.setTitle("상세조회");
+			 tdDialog.setVisible(true);
+		}
+	}
+	@Override
+	public void mouseEntered(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+	@Override
+	public void mouseExited(MouseEvent e) {
+		// TODO Auto-generated method stub
 		
 	}
 
