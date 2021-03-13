@@ -26,7 +26,7 @@ public class TelephoenDirectoryDAO {
 	
 	public void db_selAll() {
 		System.out.println("전체조회 메소드 호출");
-		String sql = "SELECT store_name, address, tel_num, food_style FROM telephonebook";
+		String sql = "SELECT store_name, address, tel_num, food_style, seq FROM telephonebook";
 		dbMgr = DBConnectionMgr.getInstance();//싱글톤으로 객체를 생성, 해당 변수가 null일떄만 인스턴스화
 		//연락처 객체를 받을 객체배열 생성
 		try {
@@ -41,6 +41,7 @@ public class TelephoenDirectoryDAO {
 				tVO.setAddress(rs.getString("address"));
 				tVO.setTel_num(rs.getString("tel_num"));
 				tVO.setFood_style(rs.getString("food_style"));
+				tVO.setSeq(rs.getInt("seq"));
 				tels.add(tVO);
 			}
 			tVOS = new TelVO[tels.size()];//객체의 수만큼 객체배열 생성
@@ -51,6 +52,7 @@ public class TelephoenDirectoryDAO {
 				oneRow.add(tVOS[i].getAddress());
 				oneRow.add(tVOS[i].getTel_num());
 				oneRow.add(tVOS[i].getFood_style());
+				oneRow.add(tVOS[i].getSeq());
 				t_view.dtm_phoneNum.addRow(oneRow);
 			}
 			
@@ -89,11 +91,11 @@ public class TelephoenDirectoryDAO {
 	            while(rs.next()) {
 	            	System.out.println("해당값 존재");
 	            	tVO = new TelVO();//TelVO객체를 생성해준다.
-	            	tVO.setSeq(rs.getInt("seq"));
 					tVO.setStore_name(rs.getString("store_name"));
 					tVO.setAddress(rs.getString("address"));
 					tVO.setTel_num(rs.getString("tel_num"));
 					tVO.setFood_style(rs.getString("food_style"));
+					tVO.setSeq(rs.getInt("seq"));
 					tels.add(tVO);
 	            }
 	            
@@ -114,6 +116,8 @@ public class TelephoenDirectoryDAO {
 					oneRow.add(tVOS[i].getAddress());
 					oneRow.add(tVOS[i].getTel_num());
 					oneRow.add(tVOS[i].getFood_style());
+					oneRow.add(tVOS[i].getSeq());
+					System.out.println(tVOS[i].getSeq());
 					t_view.dtm_phoneNum.addRow(oneRow);
 				}
 		} catch (Exception e) {
@@ -138,19 +142,19 @@ public class TelephoenDirectoryDAO {
 		switch (combo_index) {
 		
 		case 0 :
-			sql = "SELECT store_name, address, tel_num, food_style FROM telephonebook";
+			sql = "SELECT store_name, address, tel_num, food_style,seq FROM telephonebook";
      		sql += " WHERE store_name Like '%'||?||'%'";
      		break;
 		case 1 :
-			sql = "SELECT store_name, address, tel_num, food_style FROM telephonebook";
+			sql = "SELECT store_name, address, tel_num, food_style,seq FROM telephonebook";
      		sql += " WHERE address Like '%'||?||'%'";
      		break;
 		case 2 :
-			sql = "SELECT store_name, address, tel_num, food_style FROM telephonebook";
+			sql = "SELECT store_name, address, tel_num, food_style,seq FROM telephonebook";
      		sql += " WHERE tel_num Like '%'||?||'%'";
      		break;
 		case 3 :
-			sql = "SELECT store_name, address, tel_num, food_style FROM telephonebook";
+			sql = "SELECT store_name, address, tel_num, food_style,seq FROM telephonebook";
      		sql += " WHERE food_style Like '%'||?||'%'";
      		break;
 		}

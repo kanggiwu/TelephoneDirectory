@@ -2,22 +2,23 @@ package com.telephone.directory;
 
 
 public class TelVO {
-	int		seq	=	0;
-	String store_name = null;
-	String t_name = null;
-	String address = null;
-	String tel_num = null;
-	String food_style = null;
-	String main_dish = null;
+	private int		seq	=	0;
+	private String store_name = null;
+	private String t_name = null;
+	private String address = null;
+	private String tel_num = null;
+	private String food_style = null;
+	private String main_dish = null;
 	
 	public TelVO() {}
-	public TelVO(String store_name, String t_name, String address, String tel_num, String food_style, String main_dish) {
+	public TelVO(String store_name, String t_name, String address, String tel_num, String food_style, String main_dish,int seq) {
 		this.store_name = store_name;
 		this.t_name = t_name;
 		this.address = address;
 		this.tel_num = tel_num;
 		this.food_style = food_style;
 		this.main_dish = main_dish;
+		this.seq = seq;
 		
 	}
 	public String getStore_name() {

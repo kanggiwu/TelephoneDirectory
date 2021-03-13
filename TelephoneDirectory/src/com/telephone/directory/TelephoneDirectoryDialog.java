@@ -2,6 +2,11 @@ package com.telephone.directory;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
@@ -9,10 +14,12 @@ import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-public class TelephoneDirectoryDialog extends JDialog {
+public class TelephoneDirectoryDialog extends JDialog implements MouseListener{
+	
 	JMenuBar jbm           = new JMenuBar();
 	JMenu    jm_file       = new JMenu(":");
 	JMenuItem jmi_upd      = new JMenuItem("수정");
@@ -36,14 +43,19 @@ public class TelephoneDirectoryDialog extends JDialog {
 	JButton    jbtn_account = new JButton("수정완료");
 	JButton    jbtn_close    = new JButton("취소");
 	
-	TelephoneDirectoryEvent tdEvent = null;
-	
-	
-	public TelephoneDirectoryDialog() {
+	TelephoenDirectoryDAO1		db_process1		=	null;
+	TelephoneDirectoryEvent1 	t_event1		=	null;
+	TelephoneDirectoryView t_view = null;
+	TelVO telVO = null;
+	public TelephoneDirectoryDialog(TelephoneDirectoryView t_view) {
+		this.t_view = t_view;
 		initDisplay();
 	}
+
 	public void initDisplay() {
-		  
+		  this.db_process1		=	new TelephoenDirectoryDAO1(this);
+		  this.t_event1		=	new TelephoneDirectoryEvent1(this,db_process1,t_view);
+
 		  jp_center.setLayout(null);
 	      jlb_storeName.setBounds(60, 60, 100, 20);
 	      jtf_storeName.setBounds(130, 50, 180, 40);
@@ -75,21 +87,17 @@ public class TelephoneDirectoryDialog extends JDialog {
 		  jm_file.add(jmi_del);
 	      jp_south.add(jbtn_account);
 	      jp_south.add(jbtn_close);
-	      
-	      //수정과 삭제 이벤트 버튼들
-	      tdEvent = new TelephoneDirectoryEvent(this);
-	      jmi_upd.addActionListener(tdEvent);//수정버튼 클릭시
-	      jmi_del.addActionListener(tdEvent);//삭제버튼 클릭시
+	
+	      jmi_upd.addActionListener(t_event1);//수정버튼 클릭시
+	      jmi_del.addActionListener(t_event1);//삭제버튼 클릭시
 	      
 	      //수정을 위한 버튼들 안보이게 숨김
-	      tdEvent.setEnabledVisibled(false);
+	      //tdEvent.setEnabledVisibled(false);
 
 	      //수정 클릭 후 생성되는 버튼들
-	      jbtn_account.addActionListener(tdEvent);//수정안에서의 수정 버튼 클릭시
-	      jbtn_close.addActionListener(tdEvent);//수정안에서의 취소 버튼 클릭시
+	      jbtn_account.addActionListener(t_event1);//수정안에서의 수정 버튼 클릭시
+	      jbtn_close.addActionListener(t_event1);//수정안에서의 취소 버튼 클릭시
 	      
-	      TelVO telvo = new TelVO("고기고기", "01032344", "지니","고기", "사가정", "삼겹살");//*************예시
-	      tdEvent.setValue(telvo);//예************ㄴ시
 	      
 		  jbm.add(jm_file);
 		  this.setJMenuBar(jbm);
@@ -100,8 +108,182 @@ public class TelephoneDirectoryDialog extends JDialog {
 	      this.setVisible(false);
 	      
 	   }
-	public static void main(String[] args) {
-		//new TelephoneDirectoryDialog().initDisplay();
+	
+	public void getTelvo(){
+		int index[] = t_view.jtb_phoneNum.getSelectedRows();
+    	int seq = (int) t_view.dtm_phoneNum.getValueAt(index[0], 4);
+    	System.out.println(seq);
+    	
+		//연결 베이스///////////////////////////////////////
+		DBConnectionMgr dbMgr = DBConnectionMgr.getInstance();
+		Connection con = null; //데이터베이스 연결통로
+		PreparedStatement spstmt = null;//SIUP불러오는 통
+		ResultSet rs = null; //커서
+
+		//불러올 식 작성///////////////////////////////////////
+		String sql =  "SELECT store_name, tel_num, t_name, food_style, address, main_dish, seq FROM telephonebook WHERE seq=?";
+		//값 가져오기////////////////////////////////////////
+		try {
+			con   = dbMgr.getConnection();
+			System.out.println("222");
+			spstmt = con.prepareStatement(sql);
+			System.out.println("33333");
+			spstmt.setInt(1, seq);
+			System.out.println("4444");
+			rs    = spstmt.executeQuery();
+			System.out.println("5555");
+			if(rs.next()) {
+				this.telVO = new TelVO();
+				telVO.setStore_name(rs.getString("store_name"));
+				telVO.setTel_num(rs.getString("tel_num"));
+				telVO.setT_name(rs.getString("t_name"));
+				telVO.setAddress(rs.getString("address"));
+			    telVO.setFood_style(rs.getString("food_style"));
+			    telVO.setMain_dish(rs.getString("main_dish"));				
+			    telVO.setSeq(rs.getInt("seq"));				
+			}
+			else {
+				telVO = new TelVO();
+			}
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(this, "Exception++++ : "+e.toString());
+		}
+
+	}
+	
+
+	@Override
+	public void mouseClicked(MouseEvent e) {
+		getTelvo();//상세조회 메소드
+		db_process1.setTde("상세조회", false, true, telVO, t_view);
+	}
+	@Override
+	public void mouseEntered(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+	@Override
+	public void mouseExited(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+	@Override
+	public void mousePressed(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+	@Override
+	public void mouseReleased(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
 	}
 
+
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*
+ * package Telephone;
+
+
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
+import javax.swing.JOptionPane;
+
+
+public class TelephoneDirectoryEvent implements ActionListener{
+	//연결
+	   DBConnectionMgr    dbMgr     = null;
+	   Connection             	   con       = null;
+	   PreparedStatement           upstmt    = null;//수정 연결 부분
+	   PreparedStatement           spstmt    = null;//상세조회 연결 부분
+	   
+	//수정을 위한 싱글스레드
+	StringBuilder sql_upd = null;
+	
+	TelephoneDirectoryDialog tdDialog = new TelephoneDirectoryDialog();
+	TelephoneDirectoryView t_view = null;
+	TelephoenDirectoryDAO db_process = null;
+	
+	TelVO telVO = null;
+	public TelephoneDirectoryEvent() {}
+	public TelephoneDirectoryEvent(TelephoneDirectoryDialog tdDialog) {
+		this.tdDialog = tdDialog;
+	}
+	public TelephoneDirectoryEvent(TelephoneDirectoryView t_view) {
+		this.t_view = t_view;
+		System.out.println("SDfsd");
+	}
+
+
+
+
+	
+
+	public void getTelvo(){
+			int index[] = t_view.jtb_phoneNum.getSelectedRows();
+        	int seq = (int) t_view.dtm_phoneNum.getValueAt(index[0], 4);
+        	System.out.println(seq);
+        	
+    		//연결 베이스///////////////////////////////////////
+    		DBConnectionMgr dbMgr = DBConnectionMgr.getInstance();
+    		Connection con = null; //데이터베이스 연결통로
+    		PreparedStatement spstmt = null;//SIUP불러오는 통
+    		ResultSet rs = null; //커서
+    		
+    		//불러올 식 작성///////////////////////////////////////
+    		String sql =  "SELECT store_name, tel_num, t_name, food_style, address, main_dish FROM telephonebook WHERE seq=?";
+    		//값 가져오기////////////////////////////////////////
+    		try {
+    			con   = dbMgr.getConnection();
+				System.out.println("222");
+				spstmt = con.prepareStatement(sql);
+				System.out.println("33333");
+				spstmt.setInt(1, seq);
+				System.out.println("4444");
+				rs    = spstmt.executeQuery();
+				System.out.println("5555");
+				if(rs.next()) {
+					this.telVO = new TelVO();
+					telVO.setStore_name(rs.getString("store_name"));
+					telVO.setTel_num(rs.getString("tel_num"));
+					telVO.setT_name(rs.getString("t_name"));
+					telVO.setAddress(rs.getString("address"));
+				    telVO.setFood_style(rs.getString("food_style"));
+				    telVO.setMain_dish(rs.getString("main_dish"));				
+				    telVO.setSeq(rs.getInt("seq"));				
+				}
+				else {
+					telVO = new TelVO();
+				}
+				//System.out.println(telVO.getStore_name());
+			} catch (Exception e) {
+				JOptionPane.showMessageDialog(tdDialog, "Exception++++ : "+e.toString());
+			}
+
+	}
+*/
+	
