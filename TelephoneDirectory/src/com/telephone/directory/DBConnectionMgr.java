@@ -8,7 +8,7 @@ import java.sql.ResultSet;
 public class DBConnectionMgr {
 
 	private static final String _DRIVER="oracle.jdbc.driver.OracleDriver";
-	private static final String _URL = "jdbc:oracle:thin:@192.168.0.2:1521:orcl11";
+	private final static String	_URL = "jdbc:oracle:thin:@192.168.0.50:1521:orcl11";
 	private static final String _USER = "semiP";
 	private static final String _PW = "tiger";
 	static DBConnectionMgr dbMgr= null;

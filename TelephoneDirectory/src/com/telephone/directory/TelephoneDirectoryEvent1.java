@@ -10,10 +10,10 @@ public class TelephoneDirectoryEvent1 implements ActionListener {
 	TelephoenDirectoryDAO1 db_process1 = null;
 	TelephoneDirectoryView t_view = null;
 	
-	public TelephoneDirectoryEvent1(TelephoneDirectoryDialog td_dialog, TelephoenDirectoryDAO1 db_process1,TelephoneDirectoryView t_view) {
+	public TelephoneDirectoryEvent1(TelephoneDirectoryDialog td_dialog,TelephoneDirectoryView t_view) {
 		this.td_dialog  = td_dialog;
-		this.db_process1 = db_process1;
 		this.t_view = t_view;
+		this.db_process1 = td_dialog.db_process1;
 	}
 	
 
@@ -29,14 +29,17 @@ public class TelephoneDirectoryEvent1 implements ActionListener {
 		//수정 -> 수정완료버튼 클릭시//////////////
 		else if(td_dialog.jbtn_account==obj) {
 			System.out.println(td_dialog.telVO.getSeq());
+			System.out.println(db_process1);
 			db_process1.update();
+			db_process1.setTde("상세조회", false, true, td_dialog.telVO, t_view);
+			
 			
 		}
 		///////////////////////////////////
 		//수정 -> 취소버튼 클릭시/////////////////
 		else if(td_dialog.jbtn_close==obj) {
 			//취소 버튼을 누르면 다시 상세보기로 돌아옴
-			db_process1.setTde("상세조회", false, true,td_dialog.telVO,t_view);
+			db_process1.setTde("상세조회", false, true, td_dialog.telVO, t_view);
 		}
 		//////////////////////////////////
 		
