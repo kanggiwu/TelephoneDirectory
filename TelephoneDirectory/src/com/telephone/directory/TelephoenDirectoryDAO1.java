@@ -78,6 +78,9 @@ public class TelephoenDirectoryDAO1 {
 	
 	////수정 -> 수정완료버튼 클릭시//////////////
 	public void update() {
+		dbMgr = DBConnectionMgr.getInstance();
+		System.out.println(this);
+		System.out.println(td_dialog.telVO.getSeq());
 		TelVO telVO1 = new TelVO();
 		//수정된 값들을 여기에 담음
 		telVO1.setStore_name(td_dialog.jtf_storeName.getText());
@@ -87,11 +90,11 @@ public class TelephoenDirectoryDAO1 {
 		telVO1.setAddress(td_dialog.jtf_address.getText());
 		telVO1.setMain_dish(td_dialog.jtf_mainDish.getText());
 		sql_upd = new StringBuilder();
-		sql_upd.append("UPDATE TELEPHONEBOOK");
-		sql_upd.append(" STORE_NAME = ?, TEL_NUM= ?, T_NAME =?, FOOD_STYLE =?, ADDRESS=?, MAIN_DISH=?" );
-		sql_upd.append(" WHERE SEQ = ? ");
-
+		sql_upd.append("UPDATE telephonebook");
+		sql_upd.append(" SET store_name = ?, tel_num= ?, t_name =?, food_style =?, address=?, main_dish=?" );
+		sql_upd.append(" WHERE seq = ? ");
 		try {
+			con = dbMgr.getConnection();//드라이버 클래스를 찾고, 연결통로확보
 			upstmt = con.prepareStatement(sql_upd.toString());
 			int i = 0;
 			upstmt.setString(++i,telVO1.getStore_name());
@@ -112,18 +115,18 @@ public class TelephoenDirectoryDAO1 {
 		
 		//수정 완료 후에 상세보기로 넘어옴
 		System.out.println("수정완료");
-		td_dialog.setTitle("상세조회"); //창 타이틀
-		setEnabledVisibled(false,false); //값들 수정 불가, 수정버튼, 취소버튼 사라짐
 		//새로고침한번
 	}
 	////////////////////////////////////////////////////
 	
 	public void delete() {
+		dbMgr = DBConnectionMgr.getInstance();
 		sql_del = new StringBuilder();
 		sql_del.append("DELETE FROM telephonebook");
 		sql_del.append(" WHERE seq = ? ");
 		
 		try {
+			con = dbMgr.getConnection();//드라이버 클래스를 찾고, 연결통로확보
 			delstmt = con.prepareStatement(sql_del.toString());
 			delstmt.setInt(1, this.telVO.getSeq());	
 			int dresult = delstmt.executeUpdate();
@@ -136,7 +139,6 @@ public class TelephoenDirectoryDAO1 {
 		}
 		
 		System.out.println("삭제완료");
-		td_dialog.setVisible(false);
 		//새로고침
 	}
 	

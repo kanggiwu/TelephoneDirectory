@@ -54,7 +54,7 @@ public class TelephoneDirectoryDialog extends JDialog {
 
 	public void initDisplay() {
 		  this.db_process1		=	new TelephoenDirectoryDAO1(this);
-		  this.t_event1		=	new TelephoneDirectoryEvent1(this,db_process1,t_view);
+		  this.t_event1		=	new TelephoneDirectoryEvent1(this,t_view);
 		  
 		  jp_center.setLayout(null);
 	      jlb_storeName.setBounds(60, 60, 100, 20);
