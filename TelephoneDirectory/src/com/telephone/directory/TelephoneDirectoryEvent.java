@@ -14,11 +14,15 @@ public class TelephoneDirectoryEvent implements ActionListener, MouseListener{
 
 	TelephoneDirectoryView t_view = null;
 	TelephoenDirectoryDAO db_process = null;
-	TelephoneDirectoryDialog	t_dialog = new TelephoneDirectoryDialog(t_view);
+	TelephoneDirectoryDialog	t_dialog = null;
 	
 	public TelephoneDirectoryEvent(TelephoneDirectoryView t_view, TelephoenDirectoryDAO db_process) {
 		this.t_view = t_view;
 		this.db_process = db_process;
+		t_dialog = new TelephoneDirectoryDialog(this.t_view);
+	}
+	public TelephoneDirectoryEvent(TelephoneDirectoryView t_view){
+		this.t_view = t_view;
 	}
 	
 
@@ -57,6 +61,8 @@ public class TelephoneDirectoryEvent implements ActionListener, MouseListener{
 			 System.out.println("마우스 더블클릭");
 			 t_dialog.setTitle("상세조회");
 			 t_dialog.setVisible(true);
+			 t_dialog.getTelvo();//상세조회 메소드
+			 t_dialog.db_process1.setTde("상세조회", false, true, t_dialog.telVO, t_view);
 		}
 	}
 	@Override

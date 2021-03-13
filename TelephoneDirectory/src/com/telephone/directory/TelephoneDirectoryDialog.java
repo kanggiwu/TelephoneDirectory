@@ -18,7 +18,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-public class TelephoneDirectoryDialog extends JDialog implements MouseListener{
+public class TelephoneDirectoryDialog extends JDialog {
 	
 	JMenuBar jbm           = new JMenuBar();
 	JMenu    jm_file       = new JMenu(":");
@@ -55,7 +55,7 @@ public class TelephoneDirectoryDialog extends JDialog implements MouseListener{
 	public void initDisplay() {
 		  this.db_process1		=	new TelephoenDirectoryDAO1(this);
 		  this.t_event1		=	new TelephoneDirectoryEvent1(this,db_process1,t_view);
-
+		  
 		  jp_center.setLayout(null);
 	      jlb_storeName.setBounds(60, 60, 100, 20);
 	      jtf_storeName.setBounds(130, 50, 180, 40);
@@ -110,6 +110,7 @@ public class TelephoneDirectoryDialog extends JDialog implements MouseListener{
 	   }
 	
 	public void getTelvo(){
+		System.out.println(t_view);
 		int index[] = t_view.jtb_phoneNum.getSelectedRows();
     	int seq = (int) t_view.dtm_phoneNum.getValueAt(index[0], 4);
     	System.out.println(seq);
@@ -125,13 +126,9 @@ public class TelephoneDirectoryDialog extends JDialog implements MouseListener{
 		//값 가져오기////////////////////////////////////////
 		try {
 			con   = dbMgr.getConnection();
-			System.out.println("222");
 			spstmt = con.prepareStatement(sql);
-			System.out.println("33333");
 			spstmt.setInt(1, seq);
-			System.out.println("4444");
 			rs    = spstmt.executeQuery();
-			System.out.println("5555");
 			if(rs.next()) {
 				this.telVO = new TelVO();
 				telVO.setStore_name(rs.getString("store_name"));
@@ -152,31 +149,7 @@ public class TelephoneDirectoryDialog extends JDialog implements MouseListener{
 	}
 	
 
-	@Override
-	public void mouseClicked(MouseEvent e) {
-		getTelvo();//상세조회 메소드
-		db_process1.setTde("상세조회", false, true, telVO, t_view);
-	}
-	@Override
-	public void mouseEntered(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
-	@Override
-	public void mouseExited(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
-	@Override
-	public void mousePressed(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
-	@Override
-	public void mouseReleased(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
+
 
 
 }
