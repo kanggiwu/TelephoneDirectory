@@ -62,7 +62,7 @@ public class TelephoneDirectoryEvent implements ActionListener, MouseListener{
 			 t_dialog.setTitle("상세조회");
 			 t_dialog.setVisible(true);
 			 t_dialog.getTelvo();//상세조회 메소드
-			 t_dialog.db_process1.setTde("상세조회", false, true, t_dialog.telVO, t_view);
+			 t_dialog.db_process.setTde("상세조회", false, true, t_dialog.telVO, t_view);
 		}
 	}
 	@Override

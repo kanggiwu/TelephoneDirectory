@@ -43,7 +43,7 @@ public class TelephoneDirectoryDialog extends JDialog {
 	JButton    jbtn_account = new JButton("수정완료");
 	JButton    jbtn_close    = new JButton("취소");
 	
-	TelephoenDirectoryDAO1		db_process1		=	null;
+	TelephoenDirectoryDAO		db_process		=	null;
 	TelephoneDirectoryEvent1 	t_event1		=	null;
 	TelephoneDirectoryView 		t_view = null;
 	TelVO telVO = null;
@@ -53,7 +53,7 @@ public class TelephoneDirectoryDialog extends JDialog {
 	}
 
 	public void initDisplay() {
-		  this.db_process1		=	new TelephoenDirectoryDAO1(this);
+		  this.db_process		=	new TelephoenDirectoryDAO(this);
 		  this.t_event1		=	new TelephoneDirectoryEvent1(this,t_view);
 		  
 		  jp_center.setLayout(null);

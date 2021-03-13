@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="src" path="TelephoneDirectory/src"/>
+	<classpathentry kind="lib" path="D:/app/GIWU/product/11.1.0/db_1/jdbc/lib/ojdbc6.jar"/>
+	<classpathentry kind="output" path="TelephoneDirectory/bin"/>
+</classpath>
