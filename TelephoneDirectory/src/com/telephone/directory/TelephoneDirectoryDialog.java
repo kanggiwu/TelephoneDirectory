@@ -45,7 +45,7 @@ public class TelephoneDirectoryDialog extends JDialog implements MouseListener{
 	
 	TelephoenDirectoryDAO1		db_process1		=	null;
 	TelephoneDirectoryEvent1 	t_event1		=	null;
-	TelephoneDirectoryView t_view = null;
+	TelephoneDirectoryView 		t_view = null;
 	TelVO telVO = null;
 	public TelephoneDirectoryDialog(TelephoneDirectoryView t_view) {
 		this.t_view = t_view;

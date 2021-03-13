@@ -10,11 +10,11 @@ import java.sql.PreparedStatement;
 
 import javax.swing.JOptionPane;
 
-public class TelephoneDirectoryEvent implements ActionListener{
+public class TelephoneDirectoryEvent implements ActionListener, MouseListener{
 
 	TelephoneDirectoryView t_view = null;
 	TelephoenDirectoryDAO db_process = null;
-
+	TelephoneDirectoryDialog	t_dialog = new TelephoneDirectoryDialog(t_view);
 	
 	public TelephoneDirectoryEvent(TelephoneDirectoryView t_view, TelephoenDirectoryDAO db_process) {
 		this.t_view = t_view;
@@ -41,11 +41,11 @@ public class TelephoneDirectoryEvent implements ActionListener{
 			int combo_index = t_view.jcombo_search.getSelectedIndex();
 			db_process.setComboIndex(combo_index);
 		}else if(obj == t_view.jmi_insert) {//부모창에서 추가버튼을 누른 경우
-			tdDialog.setTitle("추가");
-			tdDialog.setVisible(true);
+			t_dialog.setTitle("추가");
+			t_dialog.setVisible(true);
 		}else if(obj == t_view.jmi_delete) {//부모창에서 삭제버튼을 누른 경우
-			//tdDialog.setTitle("삭제");
-			//tdDialog.setVisible(true);
+			//t_dialog.setTitle("삭제");
+			//t_dialog.setVisible(true);
 		}
 	}
 	@Override
@@ -55,8 +55,8 @@ public class TelephoneDirectoryEvent implements ActionListener{
 		 }
 		 if (me.getClickCount() == 2) {
 			 System.out.println("마우스 더블클릭");
-			 tdDialog.setTitle("상세조회");
-			 tdDialog.setVisible(true);
+			 t_dialog.setTitle("상세조회");
+			 t_dialog.setVisible(true);
 		}
 	}
 	@Override
@@ -66,6 +66,22 @@ public class TelephoneDirectoryEvent implements ActionListener{
 	}
 	@Override
 	public void mouseExited(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+
+	@Override
+	public void mousePressed(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+
+	@Override
+	public void mouseReleased(MouseEvent e) {
 		// TODO Auto-generated method stub
 		
 	}
