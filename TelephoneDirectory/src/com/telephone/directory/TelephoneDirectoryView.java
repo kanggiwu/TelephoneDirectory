@@ -11,6 +11,8 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumn;
+
 
 public class TelephoneDirectoryView {
 	
@@ -21,24 +23,27 @@ public class TelephoneDirectoryView {
 	JMenuItem				jmi_insert		=	new	JMenuItem("추가");
 	JMenuItem				jmi_delete		=	new	JMenuItem("삭제");
 	JPanel					jp_search		=	new JPanel();
-	String					cols[]			=	{"음식점","주소","전화번호","종류"};
+	String					cols[]			=	{"음식점","주소","전화번호","종류","num"};
 	JComboBox<String>		jcombo_search	=	new	JComboBox(cols);
 	JTextField				jtf_search		=	new JTextField(30);
 	JButton					jbtn_search		=	new JButton("검색");
-	String 					data[][]		=	new String[0][3];
+	String 					data[][]		=	new String[0][4];
 	DefaultTableModel		dtm_phoneNum	=	new	DefaultTableModel(data,cols);
 	JTable					jtb_phoneNum	=	new	JTable(dtm_phoneNum);
 	JScrollPane				jsp_phoneNum	=	new	JScrollPane(jtb_phoneNum);
-	TelephoenDirectoryDAO				db_process		=	new TelephoenDirectoryDAO(this);
-	TelephoneDirectoryDialog	t_dialog	=	new TelephoneDirectoryDialog();
-	TelephoneDirectoryEvent 	t_event 		=	new TelephoneDirectoryEvent(this,db_process,t_dialog);
-	
-	public TelephoneDirectoryView() {
-		
-	}
-	
+	TelephoenDirectoryDAO		db_process		=	null;
+	TelephoneDirectoryEvent 	t_event 		=	null;
+	TelephoneDirectoryDialog	td_dialog		=   null;
+	static TelephoneDirectoryView t_view = null;
+
 	private void initDisplay() {
+		this.db_process		=	new TelephoenDirectoryDAO(this);
+		this.t_event 		=	new TelephoneDirectoryEvent(this,db_process);
+		this.td_dialog		=   new TelephoneDirectoryDialog(this);
+		
 		jf	=	new	JFrame();
+		jtb_phoneNum.getColumn(cols[4]).setMinWidth(0);
+		jtb_phoneNum.getColumn(cols[4]).setMaxWidth(0);
 		jmi_insert.addActionListener(t_event);
 		jmi_delete.addActionListener(t_event);
 		jbtn_search.addActionListener(t_event);
@@ -56,6 +61,7 @@ public class TelephoneDirectoryView {
 		jf.setSize(1000,800);
 		jf.setVisible(true);
 		jf.setResizable(false);
+		jtb_phoneNum.addMouseListener(td_dialog); //마우스 클릭시 창 뜨도록
 		db_process.db_selAll();
 		
 	}
@@ -67,7 +73,7 @@ public class TelephoneDirectoryView {
 
 
 	public static void main(String[] args) {
-		TelephoneDirectoryView t_view = new TelephoneDirectoryView();
+		t_view = new TelephoneDirectoryView();
 		t_view.initDisplay();
 	}
 
