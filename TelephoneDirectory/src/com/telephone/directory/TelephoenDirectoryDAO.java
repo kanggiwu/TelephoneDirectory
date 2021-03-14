@@ -14,8 +14,8 @@ public class TelephoenDirectoryDAO {
 	
 	StringBuilder sql_upd = null;
 	StringBuilder sql_del = null;
-	TelephoneDirectoryView 	t_view 			= 	null;
-	TelephoneDirectoryDialog td_dialog = null;
+	TelephoneDirectoryView 	t_view 		= 	null;
+	TelephoneDirectoryDialog td_dialog  = null;
 	int combo_index = 0;
 	TelVO tVOS[] = null;
 	TelVO telVO = null;
@@ -30,11 +30,13 @@ public class TelephoenDirectoryDAO {
 	
 	public TelephoenDirectoryDAO() {}
 	
-	public void setTde(String titleName, boolean isFlag1,boolean isFlag2, TelVO telVO,TelephoneDirectoryView t_view ) {
+	public void setTde(String titleName, boolean isFlag1,boolean isFlag2
+			, TelVO telVO,TelephoneDirectoryView t_view, String btn_account_name) {
 		td_dialog.setVisible(true);
 		this.t_view = t_view;
 		this.telVO = telVO;
 		td_dialog.setTitle(titleName); //창 타이틀
+		td_dialog.jbtn_account.setText(btn_account_name);
 		setEnabledVisibled(isFlag1,isFlag2);//창안에서 값을 고칠 수 있는 지 여부+ 상단 바 여부
 		setValue(this.telVO); //데이터 값 넣기
 	}
@@ -117,6 +119,7 @@ public class TelephoenDirectoryDAO {
 			
 		} catch (Exception se) {
 			System.out.println("SQLException:"+se.getMessage());
+			JOptionPane.showMessageDialog(td_dialog, "전체조회 실패");
 		}
 	}
 	//검색조회
@@ -181,13 +184,14 @@ public class TelephoenDirectoryDAO {
 				}
 		} catch (Exception e) {
 			JOptionPane.showMessageDialog(t_view.jf, "Exception:"+e.toString());
+			JOptionPane.showMessageDialog(td_dialog, "검색조회 실패");
 				
 		} finally {
 			
 			dbMgr.freeConnection(con, pstmt, rs);
 		}
 	}
-	
+
 	public void getTelvo(){
 		System.out.println(t_view);
 		int index[] = t_view.jtb_phoneNum.getSelectedRows();
@@ -226,7 +230,6 @@ public class TelephoenDirectoryDAO {
 		}
 		setTde("상세조회", false, true, telVO, t_view);
 
-	}
 	//수정
 	public void update() {
 		DBConnectionMgr 			dbMgr	=	null;
@@ -235,7 +238,7 @@ public class TelephoenDirectoryDAO {
 		ResultSet					rs		=	null;
 		dbMgr = DBConnectionMgr.getInstance();
 		System.out.println(this);
-		System.out.println(td_dialog.telVO.getSeq());
+		//System.out.println(td_dialog.telVO.getSeq());
 		TelVO telVO1 = new TelVO();
 		//수정된 값들을 여기에 담음
 		telVO1.setStore_name(td_dialog.jtf_storeName.getText());
@@ -278,9 +281,8 @@ public class TelephoenDirectoryDAO {
 		DBConnectionMgr 			dbMgr	=	null;
 		Connection 					con 	=	null;
 		PreparedStatement			pstmt	= 	null;
-		ResultSet					rs		=	null;
 		dbMgr = DBConnectionMgr.getInstance();
-		sql_del = new StringBuilder();
+		sql_del = new StringBuilder();//싱글스레드에서 StringBuilder를 사용해서 string을 받는게 좋다. 
 		sql_del.append("DELETE FROM telephonebook");
 		sql_del.append(" WHERE seq = ? ");
 		
@@ -363,7 +365,41 @@ public class TelephoenDirectoryDAO {
 		return sql;
 	}
 	
+	public void db_insert(TelVO telVO) {
+		DBConnectionMgr		dbMgr 	= 	DBConnectionMgr.getInstance();
+		Connection			con		=	dbMgr.getConnection();
+		PreparedStatement	pstmt	=	null;
+		ResultSet			rs		=	null;
+		StringBuilder	sql_insert = new StringBuilder();
+		sql_insert.append("INSERT INTO telephonebook VALUES (?,?,?,?,?,?,?)");
+		
+		try {
+			con = dbMgr.getConnection();
+			pstmt = con.prepareStatement(sql_insert.toString());
+			
+			pstmt.setInt(1, telVO.getSeq());
+			pstmt.setString(2, telVO.getStore_name());
+			pstmt.setString(3, telVO.getT_name());
+			pstmt.setString(4, telVO.getAddress());
+			pstmt.setString(5, telVO.getTel_num());
+			pstmt.setString(6, telVO.getFood_style());
+			pstmt.setString(7, telVO.getMain_dish());
+			int uresult = pstmt.executeUpdate();
+			if(uresult==1) {
+				JOptionPane.showMessageDialog(td_dialog, "추가하였습니다");
+			System.out.println(telVO.getSeq()+telVO.getStore_name()+telVO.getT_name()
+			+telVO.getAddress()+telVO.getTel_num()+telVO.getFood_style()+telVO.getMain_dish());
+			}
+		}catch (Exception e) {	
+			System.out.println("insert구문 오류: "+e.getMessage());
+			JOptionPane.showMessageDialog(td_dialog, "삽입이 실패하였습니다");
+		} 
 
+		
+		
+	}
+	
+	
 	public int getComboIndex() {
 		return combo_index;
 	}

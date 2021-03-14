@@ -40,7 +40,16 @@ public class TelephoneDirectoryEvent implements ActionListener, MouseListener{
 			int combo_index = t_view.jcombo_search.getSelectedIndex();
 			db_process.setComboIndex(combo_index);
 		}else if(obj == t_view.jmi_insert) {//부모창에서 추가버튼을 누른 경우
+
+			t_dialog.setTitle("추가");
+			t_dialog.setVisible(true);
+			t_dialog.jbtn_account.setText("추가");
+			
+		}else if(obj == t_view.jmi_delete) {//부모창에서 삭제버튼을 누른 경우
+			//t_dialog.setTitle("삭제");
+
 			//t_dialog.setTitle("추가");
+
 			//t_dialog.setVisible(true);
 		}else if(obj == t_view.jmi_delete) {//부모창에서 삭제버튼을 누른 경우
 			int result = JOptionPane.showConfirmDialog(null,"정말 삭제하시겠습니까?","Confirm",JOptionPane.YES_NO_OPTION);
@@ -61,7 +70,14 @@ public class TelephoneDirectoryEvent implements ActionListener, MouseListener{
 		 }
 		 if (me.getClickCount() == 2) {
 			 System.out.println("마우스 더블클릭");
+
+			 t_dialog.setTitle("상세조회");
+			 t_dialog.setVisible(true);
+			 t_dialog.getTelvo();//상세조회 메소드
+			 t_dialog.db_process.setTde("상세조회", false, true, t_dialog.telVO, t_view,"추가");
+
 			 db_process.getTelvo();//상세조회 메소드
+
 		}
 	}
 	@Override
