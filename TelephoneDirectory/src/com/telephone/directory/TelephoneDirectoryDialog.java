@@ -27,17 +27,17 @@ public class TelephoneDirectoryDialog extends JDialog {
 	
 	///화면에 나올 이름들///////////////////////////////////////////
 	JPanel       jp_center       	= new JPanel();
-	JLabel       jlb_storeName   	= new JLabel("가게이름");
+	JLabel       jlb_storeName   	= new JLabel("음식점 이름");
 	JTextField   jtf_storeName   	= new JTextField();
 	JLabel       jlb_phoneNum		= new JLabel("전화번호");
 	JTextField   jtf_phoneNum 	= new JTextField();
-	JLabel       jlb_tName           = new JLabel("영업자 성명");
+	JLabel       jlb_tName           = new JLabel("영업자");
 	JTextField   jtf_tName            = new JTextField();
-	JLabel       jlb_foodStyle  = new JLabel("음식종류");
+	JLabel       jlb_foodStyle  = new JLabel("음식 종류");
 	JTextField   jtf_foodStyle = new JTextField();
 	JLabel       jlb_address  = new JLabel("주소");
 	JTextField   jtf_address  = new JTextField();
-	JLabel       jlb_mainDish  = new JLabel("주음식");
+	JLabel       jlb_mainDish  = new JLabel("주 음식");
 	JTextField   jtf_mainDish  = new JTextField();
 	JPanel       jp_south    = new JPanel();
 	JButton		jbtn_account = new JButton("수정완료");

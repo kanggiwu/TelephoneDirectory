@@ -44,7 +44,6 @@ public class TelephoneDirectoryView{
 	//이벤트에 다이얼로그를 생성자로 추가한다. 그러면 다오랑 이벤트에 다 연결이 되므로 t_dialog에는 t_view.t_event로 해서 이벤트를 불러오면 클릭할 수 있게 된다.
 	public TelephoneDirectoryView() {
 	}
-
 	private void initDisplay() {
 		
 		jf	=	new	JFrame();
@@ -55,6 +54,7 @@ public class TelephoneDirectoryView{
 		jbtn_search.addActionListener(t_event);
 		jcombo_search.addActionListener(t_event);
 		jtb_phoneNum.addMouseListener(t_event);
+		jtf_search.addActionListener(t_event);
 		jm_option.add(jmi_insert);
 		jm_option.add(jmi_delete);
 		jmb.add(jm_option);
