@@ -20,18 +20,19 @@ public class TelephoneDirectoryEvent1 implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent ae) {
 		Object obj = ae.getSource();
+		String command = ae.getActionCommand();
 		//수정버튼 클릭시//////////////////////
 		if(td_dialog.jmi_upd==obj) {
 			System.out.println("수정버튼 클릭");
-			db_process.setTde("수정", true, true,td_dialog.telVO,t_view);
+			db_process.setTde("수정", true, true,td_dialog.telVO,t_view,"수정");
 		}
 		///////////////////////////////////
 		//수정 -> 수정완료버튼 클릭시//////////////
-		else if(td_dialog.jbtn_account==obj) {
-			System.out.println(td_dialog.telVO.getSeq());
-			System.out.println(db_process);
+		else if(command == "수정") {
+			//System.out.println(td_dialog.telVO.getSeq());
+			//System.out.println(db_process);
 			db_process.update();
-			db_process.setTde("상세조회", false, true, td_dialog.telVO, t_view);
+			db_process.setTde("상세조회", false, true, td_dialog.telVO, t_view, null);
 			db_process.db_selAll();
 			t_view.jbtn_search.setText("검색");
 			t_view.jtf_search.setEditable(true);
@@ -42,10 +43,20 @@ public class TelephoneDirectoryEvent1 implements ActionListener {
 		//수정 -> 취소버튼 클릭시/////////////////
 		else if(td_dialog.jbtn_close==obj) {
 			//취소 버튼을 누르면 다시 상세보기로 돌아옴
-			db_process.setTde("상세조회", false, true, td_dialog.telVO, t_view);
+			td_dialog.setVisible(false);
 		}
 		//////////////////////////////////
-		
+		else if(command == "추가") {
+			int rowNum = t_view.jtb_phoneNum.getRowCount()+1;
+			System.out.println(rowNum);
+			TelVO telVO = new TelVO(td_dialog.jtf_storeName.getText(),td_dialog.jtf_tName.getText()
+					,td_dialog.jtf_address.getText(),td_dialog.jtf_phoneNum.getText()
+					,td_dialog.jtf_foodStyle.getText(),td_dialog.jtf_mainDish.getText()
+					,rowNum);
+			db_process.db_insert(telVO);
+			db_process.db_selAll();
+			
+		}
 		//삭제버튼 클릭시///////////////////////
 		else if(td_dialog.jmi_del==obj){
 			int result = JOptionPane.showConfirmDialog(td_dialog, "정말 삭제하시겠습니까?","Confirm",JOptionPane.YES_NO_OPTION);

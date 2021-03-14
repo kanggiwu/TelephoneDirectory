@@ -47,6 +47,8 @@ public class TelephoneDirectoryEvent implements ActionListener, MouseListener{
 		}else if(obj == t_view.jmi_insert) {//부모창에서 추가버튼을 누른 경우
 			t_dialog.setTitle("추가");
 			t_dialog.setVisible(true);
+			t_dialog.jbtn_account.setText("추가");
+			
 		}else if(obj == t_view.jmi_delete) {//부모창에서 삭제버튼을 누른 경우
 			//t_dialog.setTitle("삭제");
 			//t_dialog.setVisible(true);
@@ -62,7 +64,7 @@ public class TelephoneDirectoryEvent implements ActionListener, MouseListener{
 			 t_dialog.setTitle("상세조회");
 			 t_dialog.setVisible(true);
 			 t_dialog.getTelvo();//상세조회 메소드
-			 t_dialog.db_process.setTde("상세조회", false, true, t_dialog.telVO, t_view);
+			 t_dialog.db_process.setTde("상세조회", false, true, t_dialog.telVO, t_view,"추가");
 		}
 	}
 	@Override

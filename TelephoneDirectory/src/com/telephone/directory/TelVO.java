@@ -11,7 +11,9 @@ public class TelVO {
 	private String main_dish = null;
 	
 	public TelVO() {}
-	public TelVO(String store_name, String t_name, String address, String tel_num, String food_style, String main_dish,int seq) {
+	public TelVO(String store_name, String t_name
+			, String address, String tel_num, String food_style
+			, String main_dish,int seq) {
 		this.store_name = store_name;
 		this.t_name = t_name;
 		this.address = address;

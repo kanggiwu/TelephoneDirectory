@@ -40,8 +40,8 @@ public class TelephoneDirectoryDialog extends JDialog {
 	JLabel       jlb_mainDish  = new JLabel("주음식");
 	JTextField   jtf_mainDish  = new JTextField();
 	JPanel       jp_south    = new JPanel();
-	JButton    jbtn_account = new JButton("수정완료");
-	JButton    jbtn_close    = new JButton("취소");
+	JButton		jbtn_account = new JButton("수정완료");
+	JButton 	 jbtn_close    = new JButton("취소");
 	
 	TelephoenDirectoryDAO		db_process		=	null;
 	TelephoneDirectoryEvent1 	t_event1		=	null;
@@ -147,6 +147,8 @@ public class TelephoneDirectoryDialog extends JDialog {
 		}
 
 	}
+
+	
 	
 
 
