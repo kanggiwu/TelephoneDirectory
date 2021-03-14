@@ -15,7 +15,6 @@ public class TelephoenDirectoryDAO {
 	StringBuilder sql_upd = null;
 	StringBuilder sql_del = null;
 	TelephoneDirectoryView 	t_view 		= 	null;
-	TelephoneDirectoryDialog td_dialog  = null;
 	int combo_index = 0;
 	TelVO tVOS[] = null;
 	TelVO telVO = null;
@@ -23,57 +22,52 @@ public class TelephoenDirectoryDAO {
 		this.t_view = t_view;
 	}
 	
-	public TelephoenDirectoryDAO (TelephoneDirectoryDialog td_dialog,TelephoneDirectoryView t_view) {
-		this.td_dialog = td_dialog;
-		this.t_view = t_view;
-	}
-	
 	public TelephoenDirectoryDAO() {}
 	
 	public void setTde(String titleName, boolean isFlag1,boolean isFlag2
 			, TelVO telVO,TelephoneDirectoryView t_view, String btn_account_name) {
-		td_dialog.setVisible(true);
+		t_view.t_dialog.setVisible(true);
 		this.t_view = t_view;
 		this.telVO = telVO;
-		td_dialog.setTitle(titleName); //창 타이틀
-		td_dialog.jbtn_account.setText(btn_account_name);
+		t_view.t_view.t_dialog.setTitle(titleName); //창 타이틀
+		t_view.t_view.t_dialog.jbtn_account.setText(btn_account_name);
 		setEnabledVisibled(isFlag1,isFlag2);//창안에서 값을 고칠 수 있는 지 여부+ 상단 바 여부
 		setValue(this.telVO); //데이터 값 넣기
 	}
 	
 	public void setEnabledVisibled(boolean isFlag1,boolean isFlag2) {
 		//값들을 고칠 수 있는지 없는지에 대한 유무
-		td_dialog.jtf_storeName.setEditable(isFlag1);
-		td_dialog.jtf_phoneNum.setEditable(isFlag1);
-		td_dialog.jtf_tName.setEditable(isFlag1);
-		td_dialog.jtf_foodStyle.setEditable(isFlag1);
-		td_dialog.jtf_address.setEditable(isFlag1);
-		td_dialog.jtf_mainDish.setEditable(isFlag1);
+		t_view.t_dialog.jtf_storeName.setEditable(isFlag1);
+		t_view.t_dialog.jtf_phoneNum.setEditable(isFlag1);
+		t_view.t_dialog.jtf_tName.setEditable(isFlag1);
+		t_view.t_dialog.jtf_foodStyle.setEditable(isFlag1);
+		t_view.t_dialog.jtf_address.setEditable(isFlag1);
+		t_view.t_dialog.jtf_mainDish.setEditable(isFlag1);
 		//수정버튼, 취소버튼 유무
-	    td_dialog.jbtn_account.setVisible(isFlag1);
-	    td_dialog.jbtn_close.setVisible(isFlag1);
+		t_view.t_dialog.jbtn_account.setVisible(isFlag1);
+		t_view.t_dialog.jbtn_close.setVisible(isFlag1);
 	    //상단바 유무
-	    td_dialog.jm_file.setVisible(isFlag2);
+		t_view.t_dialog.jm_file.setVisible(isFlag2);
     }
 
 	void setValue(TelVO telVO) {
 		//새로 생성일경우
 		if(telVO == null) {
-			td_dialog.jtf_storeName.setText("");
-			td_dialog.jtf_phoneNum.setText("");
-			td_dialog.jtf_tName.setText("");
-			td_dialog.jtf_address.setText("");
-		    td_dialog.jtf_foodStyle.setText("");
-		    td_dialog.jtf_mainDish.setText("");
+			t_view.t_dialog.jtf_storeName.setText("");
+			t_view.t_dialog.jtf_phoneNum.setText("");
+			t_view.t_dialog.jtf_tName.setText("");
+			t_view.t_dialog.jtf_address.setText("");
+		    t_view.t_dialog.jtf_foodStyle.setText("");
+		    t_view.t_dialog.jtf_mainDish.setText("");
 		}	
 		//상세조회, 수정시에는 오라클에서 조회된 값으로 초기화 해야 합니다.
 		else {
-			td_dialog.jtf_storeName.setText(telVO.getStore_name());
-			td_dialog.jtf_phoneNum.setText(telVO.getTel_num());
-			td_dialog.jtf_tName.setText(telVO.getT_name());
-			td_dialog.jtf_address.setText(telVO.getAddress());
-		    td_dialog.jtf_foodStyle.setText(telVO.getFood_style ());
-		    td_dialog.jtf_mainDish.setText(telVO.getMain_dish ());
+			t_view.t_dialog.jtf_storeName.setText(telVO.getStore_name());
+			t_view.t_dialog.jtf_phoneNum.setText(telVO.getTel_num());
+			t_view.t_dialog.jtf_tName.setText(telVO.getT_name());
+			t_view.t_dialog.jtf_address.setText(telVO.getAddress());
+		    t_view.t_dialog.jtf_foodStyle.setText(telVO.getFood_style ());
+		    t_view.t_dialog.jtf_mainDish.setText(telVO.getMain_dish ());
 		}
 	}
 	//전체조회
@@ -119,7 +113,7 @@ public class TelephoenDirectoryDAO {
 			
 		} catch (Exception se) {
 			System.out.println("SQLException:"+se.getMessage());
-			JOptionPane.showMessageDialog(td_dialog, "전체조회 실패");
+			JOptionPane.showMessageDialog(t_view.t_dialog, "전체조회 실패");
 		}
 	}
 	//검색조회
@@ -184,7 +178,7 @@ public class TelephoenDirectoryDAO {
 				}
 		} catch (Exception e) {
 			JOptionPane.showMessageDialog(t_view.jf, "Exception:"+e.toString());
-			JOptionPane.showMessageDialog(td_dialog, "검색조회 실패");
+			JOptionPane.showMessageDialog(t_view.t_dialog, "검색조회 실패");
 				
 		} finally {
 			
@@ -226,10 +220,10 @@ public class TelephoenDirectoryDAO {
 				telVO = new TelVO();
 			}
 		} catch (Exception e) {
-			JOptionPane.showMessageDialog(td_dialog, "Exception++++ : "+e.toString());
+			JOptionPane.showMessageDialog(t_view.t_dialog, "Exception++++ : "+e.toString());
 		}
-		setTde("상세조회", false, true, telVO, t_view);
-
+		setTde("상세조회", false, true, telVO, t_view,null);
+	}
 	//수정
 	public void update() {
 		DBConnectionMgr 			dbMgr	=	null;
@@ -241,12 +235,12 @@ public class TelephoenDirectoryDAO {
 		//System.out.println(td_dialog.telVO.getSeq());
 		TelVO telVO1 = new TelVO();
 		//수정된 값들을 여기에 담음
-		telVO1.setStore_name(td_dialog.jtf_storeName.getText());
-		telVO1.setTel_num(td_dialog.jtf_phoneNum.getText());
-		telVO1.setT_name(td_dialog.jtf_tName.getText());
-		telVO1.setFood_style(td_dialog.jtf_foodStyle.getText());
-		telVO1.setAddress(td_dialog.jtf_address.getText());
-		telVO1.setMain_dish(td_dialog.jtf_mainDish.getText());
+		telVO1.setStore_name(t_view.t_dialog.jtf_storeName.getText());
+		telVO1.setTel_num(t_view.t_dialog.jtf_phoneNum.getText());
+		telVO1.setT_name(t_view.t_dialog.jtf_tName.getText());
+		telVO1.setFood_style(t_view.t_dialog.jtf_foodStyle.getText());
+		telVO1.setAddress(t_view.t_dialog.jtf_address.getText());
+		telVO1.setMain_dish(t_view.t_dialog.jtf_mainDish.getText());
 		sql_upd = new StringBuilder();
 		sql_upd.append("UPDATE telephonebook");
 		sql_upd.append(" SET store_name = ?, tel_num= ?, t_name =?, food_style =?, address=?, main_dish=?" );
@@ -264,11 +258,11 @@ public class TelephoenDirectoryDAO {
 			pstmt.setInt(++i, this.telVO.getSeq());	
 			int uresult = pstmt.executeUpdate();
 			if(uresult==1) {
-				JOptionPane.showMessageDialog(td_dialog, "수정하였습니다");
+				JOptionPane.showMessageDialog(t_view.t_dialog, "수정하였습니다");
 			}
 		} catch (SQLException e) {
 		   System.out.println(e.toString());
-     	   JOptionPane.showMessageDialog(td_dialog, "수정이 실패하였습니다");
+     	   JOptionPane.showMessageDialog(t_view.t_dialog, "수정이 실패하였습니다");
 		}
 		
 		//수정 완료 후에 상세보기로 넘어옴
@@ -292,11 +286,11 @@ public class TelephoenDirectoryDAO {
 			pstmt.setInt(1, this.telVO.getSeq());	
 			int dresult = pstmt.executeUpdate();
 			if(dresult==1) {
-				JOptionPane.showMessageDialog(td_dialog, "삭제하였습니다");
+				JOptionPane.showMessageDialog(t_view.t_dialog, "삭제하였습니다");
 			}
 		} catch (SQLException e) {
 		   System.out.println(e.toString());
-     	   JOptionPane.showMessageDialog(td_dialog, "삭제 실패하였습니다");
+     	   JOptionPane.showMessageDialog(t_view.t_dialog, "삭제 실패하였습니다");
 		}
 		
 		System.out.println("삭제완료");
@@ -386,13 +380,13 @@ public class TelephoenDirectoryDAO {
 			pstmt.setString(7, telVO.getMain_dish());
 			int uresult = pstmt.executeUpdate();
 			if(uresult==1) {
-				JOptionPane.showMessageDialog(td_dialog, "추가하였습니다");
+				JOptionPane.showMessageDialog(t_view.t_dialog, "추가하였습니다");
 			System.out.println(telVO.getSeq()+telVO.getStore_name()+telVO.getT_name()
 			+telVO.getAddress()+telVO.getTel_num()+telVO.getFood_style()+telVO.getMain_dish());
 			}
 		}catch (Exception e) {	
 			System.out.println("insert구문 오류: "+e.getMessage());
-			JOptionPane.showMessageDialog(td_dialog, "삽입이 실패하였습니다");
+			JOptionPane.showMessageDialog(t_view.t_dialog, "삽입이 실패하였습니다");
 		} 
 
 		
