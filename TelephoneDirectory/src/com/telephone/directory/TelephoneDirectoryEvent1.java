@@ -13,7 +13,6 @@ public class TelephoneDirectoryEvent1 implements ActionListener {
 	public TelephoneDirectoryEvent1(TelephoneDirectoryDialog td_dialog,TelephoneDirectoryView t_view) {
 		this.td_dialog  = td_dialog;
 		this.t_view = t_view;
-		this.db_process = td_dialog.db_process;
 	}
 	
 

@@ -43,7 +43,6 @@ public class TelephoneDirectoryDialog extends JDialog {
 	JButton		jbtn_account = new JButton("수정완료");
 	JButton 	 jbtn_close    = new JButton("취소");
 	
-	TelephoenDirectoryDAO		db_process		=	null;
 	TelephoneDirectoryEvent1 	t_event1		=	null;
 	TelephoneDirectoryView 		t_view = null;
 	TelVO telVO = null;
@@ -53,7 +52,6 @@ public class TelephoneDirectoryDialog extends JDialog {
 	}
 
 	public void initDisplay() {
-		  this.db_process		=	new TelephoenDirectoryDAO(this);
 		  this.t_event1		=	new TelephoneDirectoryEvent1(this,t_view);
 		  
 		  jp_center.setLayout(null);
@@ -109,46 +107,7 @@ public class TelephoneDirectoryDialog extends JDialog {
 	      
 	   }
 	
-	public void getTelvo(){
-		System.out.println(t_view);
-		int index[] = t_view.jtb_phoneNum.getSelectedRows();
-    	int seq = (int) t_view.dtm_phoneNum.getValueAt(index[0], 4);
-    	System.out.println(seq);
-    	
-		//연결 베이스///////////////////////////////////////
-		DBConnectionMgr dbMgr = DBConnectionMgr.getInstance();
-		Connection con = null; //데이터베이스 연결통로
-		PreparedStatement spstmt = null;//SIUP불러오는 통
-		ResultSet rs = null; //커서
 
-		//불러올 식 작성///////////////////////////////////////
-		String sql =  "SELECT store_name, tel_num, t_name, food_style, address, main_dish, seq FROM telephonebook WHERE seq=?";
-		//값 가져오기////////////////////////////////////////
-		try {
-			con   = dbMgr.getConnection();
-			spstmt = con.prepareStatement(sql);
-			spstmt.setInt(1, seq);
-			rs    = spstmt.executeQuery();
-			if(rs.next()) {
-				this.telVO = new TelVO();
-				telVO.setStore_name(rs.getString("store_name"));
-				telVO.setTel_num(rs.getString("tel_num"));
-				telVO.setT_name(rs.getString("t_name"));
-				telVO.setAddress(rs.getString("address"));
-			    telVO.setFood_style(rs.getString("food_style"));
-			    telVO.setMain_dish(rs.getString("main_dish"));				
-			    telVO.setSeq(rs.getInt("seq"));				
-			}
-			else {
-				telVO = new TelVO();
-			}
-		} catch (Exception e) {
-			JOptionPane.showMessageDialog(this, "Exception++++ : "+e.toString());
-		}
-
-	}
-
-	
 	
 
 

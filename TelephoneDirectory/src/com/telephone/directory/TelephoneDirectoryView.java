@@ -25,7 +25,8 @@ public class TelephoneDirectoryView{
 	JMenuItem				jmi_delete		=	new	JMenuItem("삭제");
 	JPanel					jp_search		=	new JPanel();
 	String					cols[]			=	{"음식점","주소","전화번호","종류","num"};
-	JComboBox<String>		jcombo_search	=	new	JComboBox(cols);
+	String					cols1[]			=	{"음식점","주소","전화번호","종류"};
+	JComboBox<String>		jcombo_search	=	new	JComboBox(cols1);
 	JTextField				jtf_search		=	new JTextField(30);
 	JButton					jbtn_search		=	new JButton("검색");
 	String 					data[][]		=	new String[0][4];
@@ -37,7 +38,9 @@ public class TelephoneDirectoryView{
 	};
 	JTable					jtb_phoneNum	=	new	JTable(dtm_phoneNum);
 	JScrollPane				jsp_phoneNum	=	new	JScrollPane(jtb_phoneNum);
-	TelephoenDirectoryDAO		db_process	=	new TelephoenDirectoryDAO(this);
+	TelephoneDirectoryDialog	t_dialog	=	new TelephoneDirectoryDialog(this);
+	TelephoenDirectoryDAO		db_process	=	new TelephoenDirectoryDAO(t_dialog,this);
+	//이벤트에 다이얼로그를 생성자로 추가한다. 그러면 다오랑 이벤트에 다 연결이 되므로 t_dialog에는 t_view.t_event로 해서 이벤트를 불러오면 클릭할 수 있게 된다.
 	TelephoneDirectoryEvent		t_event		=	new TelephoneDirectoryEvent(this,db_process);	
 	public TelephoneDirectoryView() {
 	}
