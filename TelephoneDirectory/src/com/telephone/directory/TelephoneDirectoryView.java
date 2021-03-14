@@ -63,7 +63,6 @@ public class TelephoneDirectoryView{
 		jp_search.add(jcombo_search);
 		jp_search.add(jtf_search);
 		jp_search.add(jbtn_search);
-		jtb_phoneNum.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);//테이블에서 하나만 선택 가능
 		jf.add("North",jp_search);
 		jf.add("Center",jsp_phoneNum);
 		jf.setSize(1000,800);

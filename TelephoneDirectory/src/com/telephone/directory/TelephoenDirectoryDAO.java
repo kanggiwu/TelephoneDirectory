@@ -186,12 +186,16 @@ public class TelephoenDirectoryDAO {
 		}
 	}
 
-	public void getTelvo(){
-		System.out.println(t_view);
-		int index[] = t_view.jtb_phoneNum.getSelectedRows();
-    	int seq = (int) t_view.dtm_phoneNum.getValueAt(index[0], 4);
-    	System.out.println(seq);
-    	
+	public void getTelvo(String click_name){
+		int seq = 0;
+		if(click_name=="parent_click") {
+			int index[] = t_view.jtb_phoneNum.getSelectedRows();
+			seq = (int) t_view.dtm_phoneNum.getValueAt(index[0], 4);
+		}
+		else if(click_name=="update_click") {
+			seq = telVO.getSeq();
+		}
+
 		//연결 베이스///////////////////////////////////////
 		DBConnectionMgr dbMgr = DBConnectionMgr.getInstance();
 		Connection con = null; //데이터베이스 연결통로
@@ -270,34 +274,8 @@ public class TelephoenDirectoryDAO {
 		//새로고침한번
 	}
 	////////////////////////////////////////////////////
-	//삭제
+	//자식창, 부모창 삭제
 	public void delete() {
-		DBConnectionMgr 			dbMgr	=	null;
-		Connection 					con 	=	null;
-		PreparedStatement			pstmt	= 	null;
-		dbMgr = DBConnectionMgr.getInstance();
-		sql_del = new StringBuilder();//싱글스레드에서 StringBuilder를 사용해서 string을 받는게 좋다. 
-		sql_del.append("DELETE FROM telephonebook");
-		sql_del.append(" WHERE seq = ? ");
-		
-		try {
-			con = dbMgr.getConnection();//드라이버 클래스를 찾고, 연결통로확보
-			pstmt = con.prepareStatement(sql_del.toString());
-			pstmt.setInt(1, this.telVO.getSeq());	
-			int dresult = pstmt.executeUpdate();
-			if(dresult==1) {
-				JOptionPane.showMessageDialog(t_view.t_dialog, "삭제하였습니다");
-			}
-		} catch (SQLException e) {
-		   System.out.println(e.toString());
-     	   JOptionPane.showMessageDialog(t_view.t_dialog, "삭제 실패하였습니다");
-		}
-		
-		System.out.println("삭제완료");
-		//새로고침
-	}
-	//부모창 삭제
-	public void deleteAll() {
 		int index[]	= t_view.jtb_phoneNum.getSelectedRows();
 		DBConnectionMgr 			dbMgr	=	null;
 		Connection 					con 	=	null;
@@ -307,18 +285,23 @@ public class TelephoenDirectoryDAO {
 		sql_del = new StringBuilder();
 		sql_del.append("DELETE FROM telephonebook");
 		sql_del.append(" WHERE seq IN ( ");
-		int productno[] = new int[index.length];
-		for(int i=0;i<index.length-1;i++) {
-			productno[i]=(int)t_view.dtm_phoneNum.getValueAt(index[i], 4);
-			sql_del.append("? ,");
-			
+		int productno[] = null;
+		if(index.length == 0) {
+			productno = new int[1];
+			productno[0] = telVO.getSeq();
+		}else {
+			productno = new int[index.length];
+			for(int i=0;i<index.length-1;i++) {
+				productno[i]=(int)t_view.dtm_phoneNum.getValueAt(index[i], 4);
+				sql_del.append("? ,");			
+			}
+			productno[index.length-1]=(int)t_view.dtm_phoneNum.getValueAt(index[index.length-1],4);
 		}
-		productno[index.length-1]=(int)t_view.dtm_phoneNum.getValueAt(index[index.length-1],4);
-		sql_del.append("? )");
+		sql_del.append("? )");			
 		try {
 			con = dbMgr.getConnection();//드라이버 클래스를 찾고, 연결통로확보
 			pstmt = con.prepareStatement(sql_del.toString());
-			for(int i=0;i<index.length;i++) {
+			for(int i=0;i<productno.length;i++) {
 				pstmt.setInt(i+1, productno[i]);
 			}
 			int dresult = pstmt.executeUpdate();
@@ -358,13 +341,46 @@ public class TelephoenDirectoryDAO {
 		}
 		return sql;
 	}
-	
-	public void db_insert(TelVO telVO) {
+	//데이터 추가시 seq를 max값 찾아서 +1해서 받아오기
+	public int rowNum_findmax() {
+		int rowNum=0;
 		DBConnectionMgr		dbMgr 	= 	DBConnectionMgr.getInstance();
 		Connection			con		=	dbMgr.getConnection();
 		PreparedStatement	pstmt	=	null;
 		ResultSet			rs		=	null;
 		StringBuilder	sql_insert = new StringBuilder();
+		sql_insert.append("SELECT MAX(seq) FROM telephonebook");
+		try {
+			con = dbMgr.getConnection();
+			pstmt = con.prepareStatement(sql_insert.toString());
+			rs = pstmt.executeQuery();
+			while(rs.next()) {
+				rowNum=rs.getInt(1);
+			}
+		}catch (Exception e) {	
+			System.out.println("최대값 받아오기 구문 오류: "+e.getMessage());
+		}
+		dbMgr.freeConnection(con, pstmt, rs);
+		return rowNum+1;
+	}
+	//데이터 추가
+	public void db_insert() {
+		this.telVO = new TelVO();
+		telVO.setSeq(rowNum_findmax());
+		System.out.println(telVO.getSeq());
+		DBConnectionMgr		dbMgr 	= 	DBConnectionMgr.getInstance();
+		Connection			con		=	dbMgr.getConnection();
+		PreparedStatement	pstmt	=	null;
+		ResultSet			rs		=	null;
+		StringBuilder	sql_insert = new StringBuilder();
+		TelVO telVO1 = new TelVO();
+		//수정된 값들을 여기에 담음
+		telVO1.setStore_name(t_view.t_dialog.jtf_storeName.getText());
+		telVO1.setTel_num(t_view.t_dialog.jtf_phoneNum.getText());
+		telVO1.setT_name(t_view.t_dialog.jtf_tName.getText());
+		telVO1.setFood_style(t_view.t_dialog.jtf_foodStyle.getText());
+		telVO1.setAddress(t_view.t_dialog.jtf_address.getText());
+		telVO1.setMain_dish(t_view.t_dialog.jtf_mainDish.getText());
 		sql_insert.append("INSERT INTO telephonebook VALUES (?,?,?,?,?,?,?)");
 		
 		try {
@@ -372,25 +388,21 @@ public class TelephoenDirectoryDAO {
 			pstmt = con.prepareStatement(sql_insert.toString());
 			
 			pstmt.setInt(1, telVO.getSeq());
-			pstmt.setString(2, telVO.getStore_name());
-			pstmt.setString(3, telVO.getT_name());
-			pstmt.setString(4, telVO.getAddress());
-			pstmt.setString(5, telVO.getTel_num());
-			pstmt.setString(6, telVO.getFood_style());
-			pstmt.setString(7, telVO.getMain_dish());
+			pstmt.setString(2, telVO1.getStore_name());
+			pstmt.setString(3, telVO1.getT_name());
+			pstmt.setString(4, telVO1.getAddress());
+			pstmt.setString(5, telVO1.getTel_num());
+			pstmt.setString(6, telVO1.getFood_style());
+			pstmt.setString(7, telVO1.getMain_dish());
 			int uresult = pstmt.executeUpdate();
 			if(uresult==1) {
 				JOptionPane.showMessageDialog(t_view.t_dialog, "추가하였습니다");
-			System.out.println(telVO.getSeq()+telVO.getStore_name()+telVO.getT_name()
-			+telVO.getAddress()+telVO.getTel_num()+telVO.getFood_style()+telVO.getMain_dish());
 			}
 		}catch (Exception e) {	
 			System.out.println("insert구문 오류: "+e.getMessage());
 			JOptionPane.showMessageDialog(t_view.t_dialog, "삽입이 실패하였습니다");
 		} 
-
-		
-		
+		t_view.t_dialog.setVisible(false);
 	}
 	
 	
