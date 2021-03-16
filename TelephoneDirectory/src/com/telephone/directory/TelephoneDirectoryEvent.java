@@ -12,7 +12,7 @@ import java.sql.PreparedStatement;
 
 import javax.swing.JOptionPane;
 
-import javafx.scene.input.KeyCode;
+
 
 public class TelephoneDirectoryEvent implements ActionListener, MouseListener,KeyListener{
 	
@@ -58,7 +58,6 @@ public class TelephoneDirectoryEvent implements ActionListener, MouseListener,Ke
 		else if(command.equals("추가하기")) {
 			db_process.db_insert();
 			db_process.db_selAll();
-			db_process.getTelvo("update_click");//상세조회 메소드
 				
 		}
 		else if(obj == t_view.jmi_delete) {//부모창에서 삭제버튼을 누른 경우
