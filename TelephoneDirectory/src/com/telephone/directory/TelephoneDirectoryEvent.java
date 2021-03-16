@@ -4,6 +4,7 @@ package com.telephone.directory;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.sql.Connection;
@@ -13,7 +14,7 @@ import javax.swing.JOptionPane;
 
 import javafx.scene.input.KeyCode;
 
-public class TelephoneDirectoryEvent implements ActionListener, MouseListener{
+public class TelephoneDirectoryEvent implements ActionListener, MouseListener,KeyListener{
 	
 	TelephoneDirectoryView t_view = null;
 	TelephoenDirectoryDAO db_process = null;
@@ -36,12 +37,12 @@ public class TelephoneDirectoryEvent implements ActionListener, MouseListener{
 				t_view.jbtn_search.setText("취소");
 				t_view.jtf_search.setEditable(false);
 				db_process.db_search();
-		}else if(text.length()>0&&t_view.jbtn_search.equals("검색")) {
-			db_process.db_search();
-			t_view.jtf_search.setText("");
-			t_view.jtf_search.requestFocus();
-			t_view.jbtn_search.setText("취소");
-			t_view.jtf_search.setEditable(false);
+		//}else if(text.length()>0&&t_view.jbtn_search.equals("검색")) {
+			//db_process.db_search();
+			//t_view.jtf_search.setText("");
+			//t_view.jtf_search.requestFocus();
+			//t_view.jbtn_search.setText("취소");
+			//t_view.jtf_search.setEditable(false);
 		}else if(command.equals("취소")){//부모창에서 취소를 눌렀을 경우
 				t_view.jbtn_search.setText("검색");
 				t_view.jtf_search.setEditable(true);
@@ -157,6 +158,34 @@ public class TelephoneDirectoryEvent implements ActionListener, MouseListener{
 
 	@Override
 	public void mouseReleased(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+
+	@Override
+	public void keyPressed(KeyEvent ke) {
+		int key = ke.getKeyCode();
+		if(key == KeyEvent.VK_ENTER&&t_view.jbtn_search.getText()=="검색") {
+			t_view.jbtn_search.doClick();
+			t_view.jbtn_search.setText("취소");
+			db_process.db_search();
+		}
+	}
+
+
+
+	@Override
+	public void keyReleased(KeyEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+
+	@Override
+	public void keyTyped(KeyEvent e) {
 		// TODO Auto-generated method stub
 		
 	}

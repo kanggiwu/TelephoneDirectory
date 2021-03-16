@@ -54,7 +54,7 @@ public class TelephoneDirectoryView{
 		jbtn_search.addActionListener(t_event);
 		jcombo_search.addActionListener(t_event);
 		jtb_phoneNum.addMouseListener(t_event);
-		jtf_search.addActionListener(t_event);
+		jtf_search.addKeyListener(t_event);
 		jm_option.add(jmi_insert);
 		jm_option.add(jmi_delete);
 		jmb.add(jm_option);
