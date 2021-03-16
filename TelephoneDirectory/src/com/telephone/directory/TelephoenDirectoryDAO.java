@@ -11,7 +11,10 @@ import javax.swing.table.DefaultTableModel;
 
 
 public class TelephoenDirectoryDAO {
-	
+	DBConnectionMgr 			dbMgr	=	null;
+	Connection 					con 	=	null;
+	PreparedStatement			pstmt	= 	null;
+	ResultSet					rs		=	null;
 	StringBuilder sql_upd = null;
 	StringBuilder sql_del = null;
 	TelephoneDirectoryView 	t_view 		= 	null;
@@ -71,17 +74,15 @@ public class TelephoenDirectoryDAO {
 	}
 	//전체조회
 	public void db_selAll() {
-		DBConnectionMgr 			dbMgr	=	null;
-		Connection 					con 	=	null;
-		PreparedStatement			pstmt	= 	null;
-		ResultSet					rs		=	null;
+		
+		StringBuilder sql = new StringBuilder();
 		System.out.println("전체조회 메소드 호출");
-		String sql = "SELECT store_name, address, tel_num, food_style, seq FROM telephonebook";
+		sql.append("SELECT store_name, address, tel_num, food_style, seq FROM telephonebook");
 		dbMgr = DBConnectionMgr.getInstance();//싱글톤으로 객체를 생성, 해당 변수가 null일떄만 인스턴스화
 		//연락처 객체를 받을 객체배열 생성
 		try {
 			con = dbMgr.getConnection();//드라이버 클래스를 찾고, 연결통로확보
-			pstmt = con.prepareStatement(sql);//오라클 서버에 sql문을 전달하는 객체 생성
+			pstmt = con.prepareStatement(sql.toString());//오라클 서버에 sql문을 전달하는 객체 생성
 			rs = pstmt.executeQuery();
 			TelVO	tVO	= null;
 			Vector<TelVO> tels = new Vector<TelVO>();//벡터에 TelVO 객체 넣기
@@ -354,8 +355,10 @@ public class TelephoenDirectoryDAO {
 		Connection			con		=	dbMgr.getConnection();
 		PreparedStatement	pstmt	=	null;
 		StringBuilder	sql_insert = new StringBuilder();
+		ResultSet			rs		=	null;
 		sql_insert.append("SELECT MAX(seq) FROM telephonebook");
 		try {
+			
 			con = dbMgr.getConnection();
 			pstmt = con.prepareStatement(sql_insert.toString());
 			rs = pstmt.executeQuery();
@@ -376,7 +379,6 @@ public class TelephoenDirectoryDAO {
 		DBConnectionMgr		dbMgr 	= 	DBConnectionMgr.getInstance();
 		Connection			con		=	dbMgr.getConnection();
 		PreparedStatement	pstmt	=	null;
-		ResultSet			rs		=	null;
 		StringBuilder	sql_insert = new StringBuilder();
 		TelVO telVO1 = new TelVO();
 		//수정된 값들을 여기에 담음
@@ -387,16 +389,16 @@ public class TelephoenDirectoryDAO {
 		telVO1.setAddress(t_view.t_dialog.jtf_address.getText());
 		telVO1.setMain_dish(t_view.t_dialog.jtf_mainDish.getText());
 		sql_insert.append("INSERT INTO telephonebook VALUES (?,?,?,?,?,?,?)");
+		System.out.println("텍스트필드에 써져 있는 값 받아오기: "+t_view.t_dialog.jtf_storeName.getText());
+		System.out.println("음식점 이름: telVO에서 받아오기"+telVO1.getStore_name());
 		
 		try {
 			con = dbMgr.getConnection();
 			pstmt = con.prepareStatement(sql_insert.toString());
-			System.out.println("음식점 이름"+telVO.getStore_name());
-			if(telVO.getStore_name().isEmpty()||telVO.getTel_num().isEmpty()) {
+			if(telVO1.getStore_name().isEmpty()||telVO1.getTel_num().isEmpty()) {
 				JOptionPane.showMessageDialog(t_view.t_dialog, "음식점 이름 또는 전화번호를 입력하시오.");
 				return;
 			}
-			
 			pstmt.setInt(1, telVO.getSeq());
 			pstmt.setString(2, telVO1.getStore_name());
 			pstmt.setString(3, telVO1.getT_name());
@@ -409,13 +411,13 @@ public class TelephoenDirectoryDAO {
 				JOptionPane.showMessageDialog(t_view.t_dialog, "추가하였습니다");
 			}
 		}catch (Exception e) {	
-			System.out.println("insert구문 오류: "+e.getMessage());
+			System.out.println(telVO1.getStore_name());
+			System.out.println("insert구문 오류: "+e.toString());
 			JOptionPane.showMessageDialog(t_view.t_dialog, "삽입이 실패하였습니다");
-		} 
-		t_view.t_dialog.setVisible(false);
 		}  finally {
 			dbMgr.freeConnection(con, pstmt);
 		}
+		t_view.t_dialog.setVisible(false);
 	}
 	
 	

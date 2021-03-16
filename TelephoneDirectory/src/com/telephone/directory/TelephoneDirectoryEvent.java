@@ -13,7 +13,7 @@ import javax.swing.JOptionPane;
 
 import javafx.scene.input.KeyCode;
 
-public class TelephoneDirectoryEvent implements ActionListener, MouseListener,KeyListener{
+public class TelephoneDirectoryEvent implements ActionListener, MouseListener{
 	
 	TelephoneDirectoryView t_view = null;
 	TelephoenDirectoryDAO db_process = null;
@@ -36,7 +36,7 @@ public class TelephoneDirectoryEvent implements ActionListener, MouseListener,Ke
 				t_view.jbtn_search.setText("취소");
 				t_view.jtf_search.setEditable(false);
 				db_process.db_search();
-		}else if(text.length()>0) {
+		}else if(text.length()>0&&t_view.jbtn_search.equals("검색")) {
 			db_process.db_search();
 			t_view.jtf_search.setText("");
 			t_view.jtf_search.requestFocus();
@@ -52,6 +52,7 @@ public class TelephoneDirectoryEvent implements ActionListener, MouseListener,Ke
 			db_process.setComboIndex(combo_index);
 		}else if(obj == t_view.jmi_insert) {//부모창에서 추가버튼을 누른 경우
 			db_process.setTde("추가", true, false,null,t_view,"추가하기");
+			
 		}
 		else if(command.equals("추가하기")) {
 			db_process.db_insert();

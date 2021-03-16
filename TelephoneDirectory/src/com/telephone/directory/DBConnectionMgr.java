@@ -5,10 +5,12 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
+import javax.swing.JOptionPane;
+
 public class DBConnectionMgr {
 
 	private static final String _DRIVER="oracle.jdbc.driver.OracleDriver";
-	private final static String	_URL = "jdbc:oracle:thin:@192.168.0.4:1521:orcl11";
+	private final static String	_URL = "jdbc:oracle:thin:@192.168.43.153:1521:orcl11";
 	private static final String _USER = "semiP";
 	private static final String _PW = "tiger";
 	static DBConnectionMgr dbMgr= null;
@@ -27,6 +29,7 @@ public class DBConnectionMgr {
 		} catch (ClassNotFoundException ce) {//Class.forName(_DRIVER);이걸 작성해야 이 오류 사용 가능
 			System.out.println("드라이버 클래스를 찾을 수 없습니다.");			
 		} catch (Exception e) {
+			JOptionPane.showMessageDialog(null, "오라클이 연결되어있지 않습니다.");
 			System.out.println("오라클 연결 실패");
 		}
 		return con;
