@@ -10,10 +10,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
-import javax.swing.ListSelectionModel;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableColumn;
-
 
 public class TelephoneDirectoryView{
 	
@@ -30,20 +27,19 @@ public class TelephoneDirectoryView{
 	JTextField				jtf_search		=	new JTextField(30);
 	JButton					jbtn_search		=	new JButton("검색");
 	String 					data[][]		=	new String[0][4];
-	static TelephoneDirectoryView t_view = null;
-	DefaultTableModel		dtm_phoneNum	=	new	DefaultTableModel(data,cols) {
-		public boolean isCellEditable(int row, int col) {//테이블 내에서 수정 금지
-			return false;
-		}
-	};
+	DefaultTableModel		dtm_phoneNum	=	new	DefaultTableModel(data,cols) { //테이블 내에서 수정 금지
+												public boolean isCellEditable(int row, int col) { return false; }
+												};
 	JTable					jtb_phoneNum	=	new	JTable(dtm_phoneNum);
 	JScrollPane				jsp_phoneNum	=	new	JScrollPane(jtb_phoneNum);
+	
+	
+	//static TelephoneDirectoryView t_view    =   null;
 	TelephoenDirectoryDAO		db_process	=	new TelephoenDirectoryDAO(this);
 	TelephoneDirectoryEvent		t_event		=	new TelephoneDirectoryEvent(this,db_process);	
 	TelephoneDirectoryDialog	t_dialog	=	new TelephoneDirectoryDialog(this);
 	//이벤트에 다이얼로그를 생성자로 추가한다. 그러면 다오랑 이벤트에 다 연결이 되므로 t_dialog에는 t_view.t_event로 해서 이벤트를 불러오면 클릭할 수 있게 된다.
-	public TelephoneDirectoryView() {
-	}
+	public TelephoneDirectoryView() {}
 	private void initDisplay() {
 		
 		jf	=	new	JFrame();
@@ -77,7 +73,7 @@ public class TelephoneDirectoryView{
 	
 
 	public static void main(String[] args) {
-		t_view = new TelephoneDirectoryView();
+		TelephoneDirectoryView t_view =  new TelephoneDirectoryView();
 		t_view.initDisplay();
 	}
 

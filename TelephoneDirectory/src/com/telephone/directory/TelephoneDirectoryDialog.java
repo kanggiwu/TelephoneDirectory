@@ -20,8 +20,8 @@ import javax.swing.JTextField;
 
 public class TelephoneDirectoryDialog extends JDialog {
 	
-	JMenuBar jbm           = new JMenuBar();
-	JMenu    jm_file       = new JMenu(":");
+	JMenuBar  jbm           = new JMenuBar();
+	JMenu     jm_file       = new JMenu(":");
 	JMenuItem jmi_upd      = new JMenuItem("수정하기");
 	JMenuItem jmi_del      = new JMenuItem("삭제");
 	
@@ -30,19 +30,20 @@ public class TelephoneDirectoryDialog extends JDialog {
 	JLabel       jlb_storeName   	= new JLabel("음식점 이름");
 	JTextField   jtf_storeName   	= new JTextField();
 	JLabel       jlb_phoneNum		= new JLabel("전화번호");
-	JTextField   jtf_phoneNum 	= new JTextField();
-	JLabel       jlb_tName           = new JLabel("영업자");
-	JTextField   jtf_tName            = new JTextField();
-	JLabel       jlb_foodStyle  = new JLabel("음식 종류");
-	JTextField   jtf_foodStyle = new JTextField();
-	JLabel       jlb_address  = new JLabel("주소");
-	JTextField   jtf_address  = new JTextField();
-	JLabel       jlb_mainDish  = new JLabel("주 음식");
-	JTextField   jtf_mainDish  = new JTextField();
-	JPanel       jp_south    = new JPanel();
-	JButton		jbtn_account = new JButton("수정완료");
-	JButton 	 jbtn_close    = new JButton("취소하기");
+	JTextField   jtf_phoneNum 	    = new JTextField();
+	JLabel       jlb_tName          = new JLabel("영업자");
+	JTextField   jtf_tName          = new JTextField();
+	JLabel       jlb_foodStyle      = new JLabel("음식 종류");
+	JTextField   jtf_foodStyle      = new JTextField();
+	JLabel       jlb_address  		= new JLabel("주소");
+	JTextField   jtf_address  		= new JTextField();
+	JLabel       jlb_mainDish  		= new JLabel("주 음식");
+	JTextField   jtf_mainDish  		= new JTextField();
+	JPanel       jp_south    		= new JPanel();
+	JButton		 jbtn_account 		= new JButton("수정완료");
+	JButton 	 jbtn_close   		= new JButton("취소하기");
 	
+	//view연결하기위해서
 	TelephoneDirectoryView 		t_view = null;
 	public TelephoneDirectoryDialog(TelephoneDirectoryView t_view) {
 		this.t_view = t_view;
@@ -86,13 +87,9 @@ public class TelephoneDirectoryDialog extends JDialog {
 	      jmi_upd.addActionListener(t_view.t_event);//수정버튼 클릭시
 	      jmi_del.addActionListener(t_view.t_event);//삭제버튼 클릭시
 	      
-	      //수정을 위한 버튼들 안보이게 숨김
-	      //tdEvent.setEnabledVisibled(false);
-
 	      //수정 클릭 후 생성되는 버튼들
 	      jbtn_account.addActionListener(t_view.t_event);//수정안에서의 수정 버튼 클릭시
 	      jbtn_close.addActionListener(t_view.t_event);//수정안에서의 취소 버튼 클릭시
-	      
 	      
 		  jbm.add(jm_file);
 		  this.setJMenuBar(jbm);
