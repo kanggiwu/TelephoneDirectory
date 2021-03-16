@@ -250,6 +250,10 @@ public class TelephoenDirectoryDAO {
 		telVO1.setFood_style(t_view.t_dialog.jtf_foodStyle.getText());
 		telVO1.setAddress(t_view.t_dialog.jtf_address.getText());
 		telVO1.setMain_dish(t_view.t_dialog.jtf_mainDish.getText());
+		if(telVO1.getStore_name().isEmpty()||telVO1.getTel_num().isEmpty()) {
+			JOptionPane.showMessageDialog(t_view.t_dialog, "음식점 이름 또는 전화번호를 입력하시오.");
+			return;
+		}
 		sql_upd = new StringBuilder();
 		sql_upd.append("UPDATE telephonebook");
 		sql_upd.append(" SET store_name = ?, tel_num= ?, t_name =?, food_style =?, address=?, main_dish=?" );
@@ -381,7 +385,7 @@ public class TelephoenDirectoryDAO {
 		PreparedStatement	pstmt	=	null;
 		StringBuilder	sql_insert = new StringBuilder();
 		TelVO telVO1 = new TelVO();
-		//수정된 값들을 여기에 담음
+		//데이터 추가 값들을 여기에 담음
 		telVO1.setStore_name(t_view.t_dialog.jtf_storeName.getText());
 		telVO1.setTel_num(t_view.t_dialog.jtf_phoneNum.getText());
 		telVO1.setT_name(t_view.t_dialog.jtf_tName.getText());
@@ -391,14 +395,15 @@ public class TelephoenDirectoryDAO {
 		sql_insert.append("INSERT INTO telephonebook VALUES (?,?,?,?,?,?,?)");
 		System.out.println("텍스트필드에 써져 있는 값 받아오기: "+t_view.t_dialog.jtf_storeName.getText());
 		System.out.println("음식점 이름: telVO에서 받아오기"+telVO1.getStore_name());
+		if(telVO1.getStore_name().isEmpty()||telVO1.getTel_num().isEmpty()) {
+			JOptionPane.showMessageDialog(t_view.t_dialog, "음식점 이름 또는 전화번호를 입력하시오.");
+			setTde("추가", true, false,null,t_view,"추가하기");
+			return;
+		}
 		
 		try {
 			con = dbMgr.getConnection();
 			pstmt = con.prepareStatement(sql_insert.toString());
-			if(telVO1.getStore_name().isEmpty()||telVO1.getTel_num().isEmpty()) {
-				JOptionPane.showMessageDialog(t_view.t_dialog, "음식점 이름 또는 전화번호를 입력하시오.");
-				return;
-			}
 			pstmt.setInt(1, telVO.getSeq());
 			pstmt.setString(2, telVO1.getStore_name());
 			pstmt.setString(3, telVO1.getT_name());
@@ -417,7 +422,7 @@ public class TelephoenDirectoryDAO {
 		}  finally {
 			dbMgr.freeConnection(con, pstmt);
 		}
-		t_view.t_dialog.setVisible(false);
+		getTelvo("update_click");//상세조회 메소드
 	}
 	
 	
