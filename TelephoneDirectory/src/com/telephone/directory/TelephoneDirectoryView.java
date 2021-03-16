@@ -36,7 +36,7 @@ public class TelephoneDirectoryView{
 	
 	//static TelephoneDirectoryView t_view    =   null;
 	TelephoenDirectoryDAO		db_process	=	new TelephoenDirectoryDAO(this);
-	TelephoneDirectoryEvent		t_event		=	new TelephoneDirectoryEvent(this,db_process);	
+	TelephoneDirectoryEvent		t_event		=	new TelephoneDirectoryEvent(this);	
 	TelephoneDirectoryDialog	t_dialog	=	new TelephoneDirectoryDialog(this);
 	//이벤트에 다이얼로그를 생성자로 추가한다. 그러면 다오랑 이벤트에 다 연결이 되므로 t_dialog에는 t_view.t_event로 해서 이벤트를 불러오면 클릭할 수 있게 된다.
 	public TelephoneDirectoryView() {}
