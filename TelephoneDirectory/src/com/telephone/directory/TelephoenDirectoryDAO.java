@@ -80,7 +80,7 @@ public class TelephoenDirectoryDAO {
    public void db_selAll() {
       
       StringBuilder sql = new StringBuilder();
-      sql.append("SELECT store_name, address, tel_num, food_style, seq FROM telephonebook");
+      sql.append("SELECT store_name, address, tel_num, food_style, seq FROM telephonebook ORDER BY store_name");
       dbMgr = DBConnectionMgr.getInstance();//싱글톤으로 객체를 생성, 해당 변수가 null일떄만 인스턴스화
       //연락처 객체를 받을 객체배열 생성
       try {
@@ -324,16 +324,16 @@ public class TelephoenDirectoryDAO {
       switch (combo_index) {
       
       case STORE_NAME :
-         sql.append("SELECT store_name, address, tel_num, food_style,seq FROM telephonebook WHERE store_name Like '%'||?||'%'");
+         sql.append("SELECT store_name, address, tel_num, food_style,seq FROM telephonebook WHERE store_name Like '%'||?||'%' ORDER BY store_name");
            break;
       case ADDRESS :
-         sql.append("SELECT store_name, address, tel_num, food_style,seq FROM telephonebook WHERE address Like '%'||?||'%'");
+         sql.append("SELECT store_name, address, tel_num, food_style,seq FROM telephonebook WHERE address Like '%'||?||'%' ORDER BY store_name");
            break;
       case TEL_NUM :
-         sql.append("SELECT store_name, address, tel_num, food_style,seq FROM telephonebook WHERE tel_num Like '%'||?||'%'");
+         sql.append("SELECT store_name, address, tel_num, food_style,seq FROM telephonebook WHERE tel_num Like '%'||?||'%' ORDER BY store_name");
            break;
       case FOOD_STYLE :
-         sql.append("SELECT store_name, address, tel_num, food_style,seq FROM telephonebook WHERE food_style Like '%'||?||'%'");
+         sql.append("SELECT store_name, address, tel_num, food_style,seq FROM telephonebook WHERE food_style Like '%'||?||'%' ORDER BY store_name");
            break;
       }
       return sql;

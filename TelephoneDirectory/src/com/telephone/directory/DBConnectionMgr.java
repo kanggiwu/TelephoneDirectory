@@ -10,7 +10,7 @@ import javax.swing.JOptionPane;
 public class DBConnectionMgr {
 
 	private static final String _DRIVER="oracle.jdbc.driver.OracleDriver";
-	private final static String	_URL = "jdbc:oracle:thin:@192.168.0.14:1521:orcl11";
+	private final static String	_URL = "jdbc:oracle:thin:@192.168.0.38:1521:orcl11";
 	private static final String _USER = "semiP";
 	private static final String _PW = "tiger";
 	static DBConnectionMgr dbMgr= null;
