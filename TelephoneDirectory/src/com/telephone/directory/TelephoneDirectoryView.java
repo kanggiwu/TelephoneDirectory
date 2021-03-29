@@ -21,9 +21,8 @@ public class TelephoneDirectoryView{
 	JMenuItem				jmi_insert		=	new	JMenuItem("추가");
 	JMenuItem				jmi_delete		=	new	JMenuItem("삭제");
 	JPanel					jp_search		=	new JPanel();
-	String					cols[]			=	{"음식점","주소","전화번호","종류","num"};
-	String					cols1[]			=	{"음식점","주소","전화번호","종류"};
-	JComboBox<String>		jcombo_search	=	new	JComboBox(cols1);
+	String					cols[]			=	{"음식점","주소","전화번호","종류"};
+	JComboBox<String>		jcombo_search	=	new	JComboBox(cols);
 	JTextField				jtf_search		=	new JTextField(30);
 	JButton					jbtn_search		=	new JButton("검색");
 	String 					data[][]		=	new String[0][4];
@@ -43,8 +42,6 @@ public class TelephoneDirectoryView{
 	private void initDisplay() {
 		
 		jf	=	new	JFrame();
-		jtb_phoneNum.getColumn(cols[4]).setMinWidth(0);
-		jtb_phoneNum.getColumn(cols[4]).setMaxWidth(0);
 		jmi_insert.addActionListener(t_event);
 		jmi_delete.addActionListener(t_event);
 		jbtn_search.addActionListener(t_event);
